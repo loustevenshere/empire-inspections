@@ -1,0 +1,2 @@
+export { metadata } from "../layout";
+
