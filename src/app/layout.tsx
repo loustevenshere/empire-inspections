@@ -4,6 +4,7 @@ import "./globals.css";
 import Link from "next/link";
 import { trackPageview } from "@/lib/analytics";
 import Script from "next/script";
+import Image from "next/image";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,16 +17,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Empire Inspections — Electrical & Code Compliance",
+  title: "Empire Electrical Solutions — Electrical Inspections, Philadelphia PA",
   description:
-    "Independent electrical inspections for contractors and builders. Fast scheduling, clear reports, and NEC-compliant guidance in Greater Albany.",
+    "Independent electrical inspections for contractors and builders in Philadelphia. Fast scheduling, clear reports, and NEC-compliant guidance.",
   metadataBase: new URL("https://example.com"), // replace after deploying
   openGraph: {
-    title: "Empire Inspections",
+    title: "Empire Electrical Solutions",
     description:
-      "Independent electrical inspections for contractors and builders.",
+      "Independent electrical inspections for contractors and builders in Philadelphia.",
     url: "https://example.com",
-    siteName: "Empire Inspections",
+    siteName: "Empire Electrical Solutions",
     type: "website",
   },
   robots: { index: true, follow: true },
@@ -51,7 +52,17 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-            <Link href="/" className="font-semibold tracking-tight">Empire Inspections</Link>
+            <Link href="/" className="flex items-center gap-3">
+              <Image 
+                src="/logo-empire.png" 
+                alt="Empire Electrical Solutions" 
+                width={140} 
+                height={48} 
+                priority 
+                className="h-8 sm:h-10 w-auto"
+              />
+              <span className="font-semibold tracking-tight">Empire Electrical Solutions</span>
+            </Link>
             <nav className="hidden gap-6 md:flex">
               <Link href="/services">Services</Link>
               <Link href="/about">About</Link>
@@ -62,18 +73,18 @@ export default function RootLayout({
         <main className="min-h-[80svh]">{children}</main>
         <footer className="border-t bg-secondary/20">
           <div className="mx-auto max-w-6xl px-4 py-6 text-sm">
-            <p className="font-medium">Empire Home Inspections</p>
-            <p>123 Main St, Anytown, NY 12345</p>
+            <p className="font-medium">Empire Electrical Solutions</p>
+            <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
             <p>
-              <a href="tel:+15551234567" className="underline">(555) 123-4567</a> ·
-              <a href="mailto:info@example.com" className="underline ml-1">info@example.com</a>
+              <a href="tel:+16103068497" className="underline">(610) 306-8497</a> ·
+              <a href="mailto:info@empireinspections.com" className="underline ml-1">info@empireinspections.com</a>
             </p>
-            <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Inspections</p>
+            <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Electrical Solutions</p>
           </div>
         </footer>
         <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background p-2 md:hidden">
           <a
-            href="tel:+15551234567"
+            href="tel:+16103068497"
             className="block rounded-md bg-primary px-4 py-3 text-center font-semibold text-primary-foreground"
           >
             Call Now

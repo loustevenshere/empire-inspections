@@ -18,7 +18,7 @@ export default function Page() {
           Empire delivers professional, comprehensive home inspections with rapid reporting.
         </p>
         <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-          <CTAButton href="tel:+15551234567" intent="primary">Call Now</CTAButton>
+          <CTAButton href="tel:+16103068497" intent="primary">Call Now</CTAButton>
           <CTAButton href="/contact" intent="secondary">Request Inspection</CTAButton>
         </div>
       </section>
@@ -52,7 +52,7 @@ export default function Page() {
           <h2 className="text-xl font-semibold">Ready to book?</h2>
           <div className="mt-3 flex flex-col gap-3 sm:flex-row">
             <CTAButton href="/contact" intent="primary">Request Inspection</CTAButton>
-            <CTAButton href="tel:+15551234567" intent="ghost">Call (555) 123-4567</CTAButton>
+            <CTAButton href="tel:+16103068497" intent="ghost">Call (610) 306-8497</CTAButton>
           </div>
         </div>
       </section>
@@ -62,14 +62,14 @@ export default function Page() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "LocalBusiness",
-            name: "Empire Home Inspections",
-            telephone: "+1-555-123-4567",
+            name: "Empire Electrical Solutions",
+            telephone: "+1-610-306-8497",
             address: {
               "@type": "PostalAddress",
-              streetAddress: "123 Main St",
-              addressLocality: "Anytown",
-              addressRegion: "NY",
-              postalCode: "12345",
+              streetAddress: "6901 Germantown Avenue, Suite 200",
+              addressLocality: "Philadelphia",
+              addressRegion: "PA",
+              postalCode: "19119",
               addressCountry: "US",
             },
             url: "https://www.empire-inspections.example",

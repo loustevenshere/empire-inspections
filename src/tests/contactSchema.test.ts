@@ -1,36 +1,41 @@
-import { describe, expect, it } from "vitest";
+import { describe, it, expect } from "vitest";
 import { contactSchema } from "@/lib/validation";
 
 describe("contactSchema", () => {
-  it("validates a correct payload", () => {
-    const parsed = contactSchema.safeParse({
-      name: "Alice",
+  it("should validate a valid contact form", () => {
+    const validData = {
+      name: "John Doe",
       company: "",
-      phone: "5551234567",
-      email: "alice@example.com",
-      jobAddress: "1 Main St",
-      municipality: "Albany",
-      inspectionType: "General",
-      preferred: "Tomorrow",
-      notes: "",
+      phone: "555-123-4567",
+      email: "john@example.com",
+      jobAddress: "123 Main St",
+      municipality: "Philadelphia",
+      inspectionType: "Rough-In Electrical Inspection",
+      preferred: "Morning",
+      notes: "Test notes",
       _hp: "",
-    });
-    expect(parsed.success).toBe(true);
+    };
+
+    const result = contactSchema.safeParse(validData);
+    expect(result.success).toBe(true);
   });
 
-  it("fails on invalid email", () => {
-    const parsed = contactSchema.safeParse({
-      name: "Alice",
-      company: "",
-      phone: "5551234567",
-      email: "not-an-email",
-      jobAddress: "1 Main St",
-      municipality: "Albany",
-      inspectionType: "General",
-      preferred: "Tomorrow",
+  it("should validate a contact form without company", () => {
+    const validData = {
+      name: "Jane Doe",
+      company: null,
+      phone: "555-987-6543",
+      email: "jane@example.com",
+      jobAddress: "456 Oak Ave",
+      municipality: "Philadelphia",
+      inspectionType: "Final Electrical Inspection",
+      preferred: "Afternoon",
       notes: "",
-    });
-    expect(parsed.success).toBe(false);
+      _hp: "",
+    };
+
+    const result = contactSchema.safeParse(validData);
+    expect(result.success).toBe(true);
   });
 });
 

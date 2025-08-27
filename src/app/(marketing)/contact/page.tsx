@@ -23,6 +23,17 @@ export default function Page() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
       <h1 className="text-2xl font-bold">Request Inspection</h1>
+      
+      {/* Business Information */}
+      <div className="mt-4 p-4 bg-muted/30 rounded-lg">
+        <h2 className="font-medium mb-2">Empire Electrical Solutions</h2>
+        <p className="text-sm text-muted-foreground mb-1">6901 Germantown Avenue, Suite 200</p>
+        <p className="text-sm text-muted-foreground mb-2">Philadelphia, PA 19119</p>
+        <p className="text-sm">
+          <a href="tel:+16103068497" className="text-primary hover:underline">(610) 306-8497</a>
+        </p>
+      </div>
+      
       {submitted ? (
         <p className="mt-4">Thanks! We&apos;ll be in touch shortly.</p>
       ) : (

@@ -1,6 +1,6 @@
 // src/app/page.tsx
 import Link from "next/link";
-import Image from "next/image";
+import { ClipboardCheck, ListChecks, Zap } from "lucide-react";
 
 export default function Home() {
   return (
@@ -12,12 +12,12 @@ export default function Home() {
             <span className="h-2 w-2 rounded-full bg-green-500" />
             NEC-focused • Independent • Fast turnaround
           </div>
-          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+          <h1 className="text-5xl sm:text-6xl font-semibold tracking-tight">
             Electrical inspections that help you pass the first time.
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
             Independent electrical inspections for contractors and builders in
-            Greater Albany. Fast scheduling, clear punch-lists, and same-day
+            Philadelphia, PA. Fast scheduling, clear punch-lists, and same-day
             preliminary findings on most jobs.
           </p>
 
@@ -38,7 +38,7 @@ export default function Home() {
 
           {/* quick trust line */}
           <div className="mt-6 text-sm text-muted-foreground">
-            InterNACHI-certified • NY State licensed • Insured
+            InterNACHI-certified • PA State licensed • Insured
           </div>
         </div>
       </section>
@@ -49,17 +49,17 @@ export default function Home() {
           {
             title: "Code-first reviews",
             desc: "Grounding/bonding, box fill, conductor sizing, and device locations checked against NEC.",
-            icon: "/icons/clipboard-check.svg",
+            icon: <ClipboardCheck size={28} className="opacity-80" />,
           },
           {
             title: "Clear punch-lists",
             desc: "Actionable items grouped by priority so crews can close issues quickly.",
-            icon: "/icons/list-checks.svg",
+            icon: <ListChecks size={28} className="opacity-80" />,
           },
           {
             title: "Fast scheduling",
             desc: "Rough-in and finals scheduled quickly; prelim results often the same day.",
-            icon: "/icons/bolt.svg",
+            icon: <Zap size={28} className="opacity-80" />,
           },
         ].map((b) => (
           <div
@@ -67,14 +67,7 @@ export default function Home() {
             className="rounded-xl border bg-background p-5 shadow-sm"
           >
             <div className="flex items-start gap-3">
-              <Image
-                src={b.icon}
-                alt=""
-                aria-hidden
-                width={28}
-                height={28}
-                className="opacity-80"
-              />
+              {b.icon}
               <div>
                 <h3 className="font-medium">{b.title}</h3>
                 <p className="mt-1 text-sm text-muted-foreground">{b.desc}</p>
@@ -127,15 +120,11 @@ export default function Home() {
       <footer className="mt-10 border-t bg-muted/30">
         <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Empire Inspections. All rights
+            © {new Date().getFullYear()} Empire Electrical Solutions. All rights
             reserved.
           </p>
-          <div className="text-sm text-muted-foreground">
-            Greater Albany, NY •{" "}
-            <a className="hover:underline" href="mailto:info@empireinspections.com">
-              info@empireinspections.com
-            </a>{" "}
-            • <a className="hover:underline" href="tel:+16103068497">(610) 306-8497</a>
+          <div className="text-sm text-muted-foreground text-center sm:text-right">
+            Empire Electrical Solutions • 6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119 • <a className="hover:underline" href="tel:+16103068497">(610) 306-8497</a>
           </div>
         </div>
       </footer>

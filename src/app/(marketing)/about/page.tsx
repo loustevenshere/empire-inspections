@@ -16,12 +16,12 @@ export default function Page() {
         <h2 className="text-xl font-semibold">Credentials</h2>
         <ul className="list-disc pl-6 text-muted-foreground">
           <li>InterNACHI Certified Professional Inspector</li>
-          <li>New York State Licensed</li>
+          <li>Pennsylvania State Licensed</li>
         </ul>
       </div>
       <div>
         <h2 className="text-xl font-semibold">Service Area</h2>
-        <p className="text-muted-foreground">Greater Albany and surrounding municipalities.</p>
+        <p className="text-muted-foreground">Philadelphia and surrounding municipalities.</p>
       </div>
     </div>
   );
