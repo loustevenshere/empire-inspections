@@ -16,13 +16,21 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Empire Home Inspections",
-    template: "%s | Empire Home Inspections",
+  title: "Empire Inspections — Electrical & Code Compliance",
+  description:
+    "Independent electrical inspections for contractors and builders. Fast scheduling, clear reports, and NEC-compliant guidance in Greater Albany.",
+  metadataBase: new URL("https://example.com"), // replace after deploying
+  openGraph: {
+    title: "Empire Inspections",
+    description:
+      "Independent electrical inspections for contractors and builders.",
+    url: "https://example.com",
+    siteName: "Empire Inspections",
+    type: "website",
   },
-  description: "Trusted, certified home inspections with rapid turnaround.",
-  metadataBase: new URL("https://www.empire-inspections.example"),
+  robots: { index: true, follow: true },
 };
+
 
 export default function RootLayout({
   children,

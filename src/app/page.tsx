@@ -1,102 +1,143 @@
+// src/app/page.tsx
+import Link from "next/link";
 import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="font-sans">
+      {/* Hero */}
+      <section className="min-h-[60vh] grid place-items-center px-6 py-16 sm:py-24 bg-gradient-to-b from-background to-muted/30">
+        <div className="mx-auto max-w-3xl text-center sm:text-left">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-muted-foreground">
+            <span className="h-2 w-2 rounded-full bg-green-500" />
+            NEC-focused • Independent • Fast turnaround
+          </div>
+          <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl">
+            Electrical inspections that help you pass the first time.
+          </h1>
+          <p className="mt-4 text-lg text-muted-foreground">
+            Independent electrical inspections for contractors and builders in
+            Greater Albany. Fast scheduling, clear punch-lists, and same-day
+            preliminary findings on most jobs.
+          </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            >
+              Request Inspection
+            </Link>
+            <a
+              href="tel:+16103068497"
+              className="inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-medium hover:bg-muted"
+            >
+              Call (610) 306-8497
+            </a>
+          </div>
+
+          {/* quick trust line */}
+          <div className="mt-6 text-sm text-muted-foreground">
+            InterNACHI-certified • NY State licensed • Insured
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      </section>
+
+      {/* Quick benefits */}
+      <section className="mx-auto grid max-w-5xl gap-4 px-6 py-10 sm:grid-cols-3">
+        {[
+          {
+            title: "Code-first reviews",
+            desc: "Grounding/bonding, box fill, conductor sizing, and device locations checked against NEC.",
+            icon: "/icons/clipboard-check.svg",
+          },
+          {
+            title: "Clear punch-lists",
+            desc: "Actionable items grouped by priority so crews can close issues quickly.",
+            icon: "/icons/list-checks.svg",
+          },
+          {
+            title: "Fast scheduling",
+            desc: "Rough-in and finals scheduled quickly; prelim results often the same day.",
+            icon: "/icons/bolt.svg",
+          },
+        ].map((b) => (
+          <div
+            key={b.title}
+            className="rounded-xl border bg-background p-5 shadow-sm"
+          >
+            <div className="flex items-start gap-3">
+              <Image
+                src={b.icon}
+                alt=""
+                aria-hidden
+                width={28}
+                height={28}
+                className="opacity-80"
+              />
+              <div>
+                <h3 className="font-medium">{b.title}</h3>
+                <p className="mt-1 text-sm text-muted-foreground">{b.desc}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* Services preview */}
+      <section className="mx-auto max-w-5xl px-6 pb-6">
+        <h2 className="text-2xl font-bold">Our Services</h2>
+        <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {[
+            {
+              title: "Rough-In Electrical Inspection",
+              desc: "Verify conductor sizes, box fills, grounding/bonding, and GFCI/AFCI locations before walls close.",
+            },
+            {
+              title: "Final Electrical Inspection",
+              desc: "Receptacles, fixtures, panel labeling, breakers, and device testing for certificate sign-off.",
+            },
+            {
+              title: "Service Upgrade Inspection",
+              desc: "Meter, mast, grounding electrode system, bonding jumpers, clearances, and labeling.",
+            },
+            {
+              title: "Commercial TI / Fit-Out",
+              desc: "Load calcs spot-check, panel schedules, equipment disconnects, and emergency egress power.",
+            },
+          ].map((s) => (
+            <li key={s.title} className="rounded-lg border p-4">
+              <p className="font-medium">{s.title}</p>
+              <p className="text-sm text-muted-foreground mt-1">{s.desc}</p>
+            </li>
+          ))}
+        </ul>
+
+        <div className="mt-6">
+          <Link
+            href="/services"
+            className="text-sm font-medium underline underline-offset-4 hover:no-underline"
+          >
+            View all service details →
+          </Link>
+        </div>
+      </section>
+
+        {/* Footer */}
+      <footer className="mt-10 border-t bg-muted/30">
+        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row">
+          <p className="text-sm text-muted-foreground">
+            © {new Date().getFullYear()} Empire Inspections. All rights
+            reserved.
+          </p>
+          <div className="text-sm text-muted-foreground">
+            Greater Albany, NY •{" "}
+            <a className="hover:underline" href="mailto:info@empireinspections.com">
+              info@empireinspections.com
+            </a>{" "}
+            • <a className="hover:underline" href="tel:+16103068497">(610) 306-8497</a>
+          </div>
+        </div>
       </footer>
     </div>
   );

@@ -16,10 +16,31 @@ export default function Page() {
     <div className="mx-auto max-w-6xl px-4 py-8 space-y-8">
       <h1 className="text-2xl font-bold">Our Services</h1>
       <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {["General Home", "Radon", "Mold", "Termite", "Sewer"].map((s) => (
-          <li key={s} className="rounded-lg border p-4">
-            <p className="font-medium">{s} Inspection</p>
-            <p className="text-sm text-muted-foreground">Thorough and standards-based.</p>
+        {[
+          {
+            title: "Rough-In Electrical Inspection",
+            description:
+              "Verify conductor sizes, box fills, grounding/bonding, and GFCI/AFCI locations before walls close.",
+          },
+          {
+            title: "Final Electrical Inspection",
+            description:
+              "Receptacles, fixtures, panel labeling, breakers, and device testing for certificate sign-off.",
+          },
+          {
+            title: "Service Upgrade Inspection",
+            description:
+              "Meter, mast, grounding electrode system, bonding jumpers, clearances, and labeling.",
+          },
+          {
+            title: "Commercial TI / Fit-Out",
+            description:
+              "Load calcs spot-check, panel schedules, equipment disconnects, and emergency egress power.",
+          },
+        ].map((service) => (
+          <li key={service.title} className="rounded-lg border p-4">
+            <p className="font-medium">{service.title}</p>
+            <p className="text-sm text-muted-foreground">{service.description}</p>
           </li>
         ))}
       </ul>
