@@ -54,7 +54,7 @@ export default function RootLayout({
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
             <Link href="/" className="flex items-center gap-3">
               <Image 
-                src="/logo-empire.png" 
+                src="/logo-empire.jpeg" 
                 alt="Empire Electrical Solutions" 
                 width={140} 
                 height={48} 
