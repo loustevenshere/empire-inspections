@@ -1,44 +1,52 @@
 // src/app/page.tsx
 import Link from "next/link";
+import Image from "next/image";
 import { ClipboardCheck, ListChecks, Zap } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="font-sans">
       {/* Hero */}
-      <section className="min-h-[60vh] grid place-items-center px-6 py-16 sm:py-24 bg-gradient-to-b from-background to-muted/30">
-        <div className="mx-auto max-w-3xl text-center sm:text-left">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs text-muted-foreground">
-            <span className="h-2 w-2 rounded-full bg-green-500" />
-            NEC-focused • Independent • Fast turnaround
-          </div>
-          <h1 className="text-5xl sm:text-6xl font-semibold tracking-tight">
-            Electrical inspections that help you pass the first time.
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image */}
+        <Image
+          src="/lightbulb.jpg"
+          alt="Electrical inspection background"
+          fill
+          className="object-cover"
+          priority
+        />
+        
+        {/* Dark Overlay Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30" />
+        
+        {/* Content */}
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center text-white">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+            Empire Electrical Solutions
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
-            Independent electrical inspections for contractors and builders in
-            Philadelphia, PA. Fast scheduling, clear punch-lists, and same-day
-            preliminary findings on most jobs.
+          
+          <p className="text-xl sm:text-2xl md:text-3xl italic mb-4 text-gray-200">
+            We Do What We Say
+          </p>
+          
+          <p className="text-sm sm:text-base md:text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+            PA Licensed and Insured Inspection Agency — License # A000501
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center rounded-lg bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 text-lg font-bold text-black hover:bg-gray-100 transition-colors shadow-lg"
             >
-              Request Inspection
+              Schedule an Inspection
             </Link>
-            <a
-              href="tel:+16103068497"
-              className="inline-flex items-center justify-center rounded-lg border px-5 py-3 text-sm font-medium hover:bg-muted"
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-lg border-2 border-white px-8 py-4 text-lg font-medium text-white hover:bg-white hover:text-black transition-colors"
             >
-              Call (610) 306-8497
-            </a>
-          </div>
-
-          {/* quick trust line */}
-          <div className="mt-6 text-sm text-muted-foreground">
-            InterNACHI-certified • PA State licensed • Insured
+              Contact Us
+            </Link>
           </div>
         </div>
       </section>
@@ -77,35 +85,12 @@ export default function Home() {
         ))}
       </section>
 
-      {/* Services preview */}
-      <section className="mx-auto max-w-5xl px-6 pb-6">
-        <h2 className="text-2xl font-bold">Our Services</h2>
-        <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {[
-            {
-              title: "Rough-In Electrical Inspection",
-              desc: "Verify conductor sizes, box fills, grounding/bonding, and GFCI/AFCI locations before walls close.",
-            },
-            {
-              title: "Final Electrical Inspection",
-              desc: "Receptacles, fixtures, panel labeling, breakers, and device testing for certificate sign-off.",
-            },
-            {
-              title: "Service Upgrade Inspection",
-              desc: "Meter, mast, grounding electrode system, bonding jumpers, clearances, and labeling.",
-            },
-            {
-              title: "Commercial TI / Fit-Out",
-              desc: "Load calcs spot-check, panel schedules, equipment disconnects, and emergency egress power.",
-            },
-          ].map((s) => (
-            <li key={s.title} className="rounded-lg border p-4">
-              <p className="font-medium">{s.title}</p>
-              <p className="text-sm text-muted-foreground mt-1">{s.desc}</p>
-            </li>
-          ))}
-        </ul>
-
+      {/* Services */}
+      <section className="mx-auto max-w-5xl px-6 py-10">
+        <h2 className="text-2xl font-bold">Services</h2>
+        <p className="mt-4 text-muted-foreground">
+          Full Service Electrical Inspection Agency — Offering same day or next day inspections.
+        </p>
         <div className="mt-6">
           <Link
             href="/services"
@@ -114,6 +99,29 @@ export default function Home() {
             View all service details →
           </Link>
         </div>
+      </section>
+
+      {/* Systems Covered */}
+      <section className="mx-auto max-w-5xl px-6 pb-6">
+        <h2 className="text-2xl font-bold">Systems Covered</h2>
+        <ul className="mt-4 list-disc pl-6 text-muted-foreground space-y-1">
+          <li>Residential Additions and Alterations</li>
+          <li>Commercial Projects</li>
+          <li>PA Pools</li>
+          <li>Private Pools</li>
+          <li>Solar Installations</li>
+          <li>Low Voltage Applications</li>
+          <li>Utility Services</li>
+          <li>And more...</li>
+        </ul>
+      </section>
+
+      {/* Staff & Experience */}
+      <section className="mx-auto max-w-5xl px-6 pb-6">
+        <h2 className="text-2xl font-bold">Staff & Experience</h2>
+        <p className="mt-4 text-muted-foreground">
+          With over two decades of experience as a Commercial and Residential Electrician, our full staff is committed to ensuring each project meets the highest standards of safety and compliance.
+        </p>
       </section>
 
         {/* Footer */}
