@@ -67,19 +67,30 @@ export default function RootLayout({
               <Link href="/services">Services</Link>
               <Link href="/about">About</Link>
               <Link href="/contact">Contact</Link>
+              <Link href="/payments">Pay</Link>
             </nav>
           </div>
         </header>
         <main className="min-h-[80svh]">{children}</main>
         <footer className="border-t bg-secondary/20">
           <div className="mx-auto max-w-6xl px-4 py-6 text-sm">
-            <p className="font-medium">Empire Electrical Solutions</p>
-            <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
-            <p>
-              <a href="tel:+16103068497" className="underline">(610) 306-8497</a> ·
-              <a href="mailto:info@empireinspections.com" className="underline ml-1">info@empireinspections.com</a>
-            </p>
-            <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Electrical Solutions</p>
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <p className="font-medium">Empire Electrical Solutions</p>
+                <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
+                <p>
+                  <a href="tel:+16103068497" className="underline">(610) 306-8497</a> ·
+                  <a href="mailto:info@empireinspections.com" className="underline ml-1">info@empireinspections.com</a>
+                </p>
+              </div>
+              <nav className="flex gap-4 text-sm">
+                <Link href="/services" className="underline hover:no-underline">Services</Link>
+                <Link href="/about" className="underline hover:no-underline">About</Link>
+                <Link href="/contact" className="underline hover:no-underline">Contact</Link>
+                <Link href="/payments" className="underline hover:no-underline">Pay</Link>
+              </nav>
+            </div>
+            <p className="mt-4 text-muted-foreground">© {new Date().getFullYear()} Empire Electrical Solutions</p>
           </div>
         </footer>
         <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background p-2 md:hidden">
