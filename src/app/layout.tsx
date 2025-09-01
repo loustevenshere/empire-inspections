@@ -77,7 +77,7 @@ export default function RootLayout({
             <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
             <p>
               <a href="tel:+16103068497" className="underline">(610) 306-8497</a> ·
-              <a href="mailto:info@empireinspections.com" className="underline ml-1">info@empireinspections.com</a>
+              <a href="mailto:info@empireinspectionagency.com" className="underline ml-1">info@empireinspectionagency.com</a>
             </p>
             <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Electrical Solutions</p>
           </div>
