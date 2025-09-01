@@ -32,6 +32,7 @@ export default function Page() {
           fill
           className="object-cover"
           priority
+          sizes="100vw"
         />
         
         {/* Dark Overlay Gradient */}

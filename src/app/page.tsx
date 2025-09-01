@@ -15,6 +15,7 @@ export default function Home() {
           fill
           className="object-cover"
           priority
+          sizes="100vw"
         />
         
         {/* Dark Overlay Gradient */}
@@ -22,7 +23,7 @@ export default function Home() {
         
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center text-white">
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 drop-shadow-2xl">
             Empire Electrical Solutions
           </h1>
           
@@ -123,19 +124,6 @@ export default function Home() {
           With over two decades of experience as a Commercial and Residential Electrician, our full staff is committed to ensuring each project meets the highest standards of safety and compliance.
         </p>
       </section>
-
-        {/* Footer */}
-      <footer className="mt-10 border-t bg-muted/30">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Empire Electrical Solutions. All rights
-            reserved.
-          </p>
-          <div className="text-sm text-muted-foreground text-center sm:text-right">
-            Empire Electrical Solutions • 6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119 • <a className="hover:underline" href="tel:+16103068497">(610) 306-8497</a>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }

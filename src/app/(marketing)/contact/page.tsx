@@ -51,7 +51,7 @@ export default function Page() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium">Phone</label>
-              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("phone")} />
+              <input type="tel" className="mt-1 w-full rounded-md border px-3 py-2" {...register("phone")} />
               {errors.phone && <p className="text-sm text-red-600">{errors.phone.message}</p>}
             </div>
             <div>
