@@ -9,11 +9,13 @@ import Image from "next/image";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -41,11 +43,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://plausible.io" crossOrigin="" />
         {process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN ? (
           <Script
             defer
             data-domain={process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN}
             src="https://plausible.io/js/script.js"
+            strategy="lazyOnload"
           />
         ) : null}
       </head>
@@ -60,8 +64,9 @@ export default function RootLayout({
                 height={48} 
                 priority 
                 className="h-8 sm:h-10 w-auto"
+                sizes="(max-width: 640px) 140px, 140px"
               />
-              <span className="font-semibold tracking-tight">Empire Electrical Solutions</span>
+              <span className="text-lg font-bold tracking-tight">Empire Electrical Solutions</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
               <Link href="/services">Services</Link>
@@ -73,7 +78,7 @@ export default function RootLayout({
         <main className="min-h-[80svh]">{children}</main>
         <footer className="border-t bg-secondary/20">
           <div className="mx-auto max-w-6xl px-4 py-6 text-sm">
-            <p className="font-medium">Empire Electrical Solutions</p>
+            <p className="text-lg font-bold">Empire Electrical Solutions</p>
             <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
             <p>
               <a href="tel:+16103068497" className="underline">(610) 306-8497</a> ·
