@@ -37,8 +37,8 @@ export default function Page() {
       {submitted ? (
         <p className="mt-4">Thanks! We&apos;ll be in touch shortly.</p>
       ) : (
-        <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
-          <input type="text" className="hidden" aria-hidden="true" tabIndex={-1} {...register("_hp")} />
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate suppressHydrationWarning>
+          <input type="text" className="hidden" aria-hidden="true" tabIndex={-1} {...register("_hp")} suppressHydrationWarning />
           <div>
             <label className="block text-sm font-medium">Name</label>
             <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("name")} />
@@ -74,10 +74,14 @@ export default function Page() {
             <div>
               <label className="block text-sm font-medium">Inspection Type</label>
               <select className="mt-1 w-full rounded-md border px-3 py-2" {...register("inspectionType")}>
+                <option value="" disabled>
+                  Select inspection type...
+                </option>
                 {inspectionTypeEnum.options.map((t) => (
                   <option key={t} value={t}>{t}</option>
                 ))}
               </select>
+              {errors.inspectionType && <p className="text-sm text-red-600">{errors.inspectionType.message}</p>}
             </div>
           </div>
           <div>
@@ -87,7 +91,13 @@ export default function Page() {
           </div>
           <div>
             <label className="block text-sm font-medium">Notes</label>
-            <textarea rows={4} className="mt-1 w-full rounded-md border px-3 py-2" {...register("notes")} />
+            <textarea 
+              rows={4} 
+              className="mt-1 w-full rounded-md border px-3 py-2" 
+              {...register("notes")} 
+              placeholder="Please provide your permit # if applicable"
+              suppressHydrationWarning
+            />
           </div>
           <button disabled={isSubmitting} className="w-full rounded-md bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
             {isSubmitting ? "Submitting..." : "Submit"}
