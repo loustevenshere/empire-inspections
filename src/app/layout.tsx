@@ -69,7 +69,7 @@ export default function RootLayout({
               <Link href="/pay">Pay</Link>
               <Link href="/contact">Contact</Link>
             </nav>
-            <nav className="flex md:hidden justify-end">
+            <nav className="flex md:hidden justify-end pt-2">
               <Link href="/pay" aria-label="Pay">Pay</Link>
             </nav>
           </div>

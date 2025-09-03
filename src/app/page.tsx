@@ -124,18 +124,7 @@ export default function Home() {
         </p>
       </section>
 
-        {/* Footer */}
-      <footer className="mt-10 border-t bg-muted/30">
-        <div className="mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-6 py-6 sm:flex-row">
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Empire Electrical Solutions. All rights
-            reserved.
-          </p>
-          <div className="text-sm text-muted-foreground text-center sm:text-right">
-            Empire Electrical Solutions • 6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119 • <a className="hover:underline" href="tel:+16103068497">(610) 306-8497</a>
-          </div>
-        </div>
-      </footer>
+
     </div>
   );
 }
