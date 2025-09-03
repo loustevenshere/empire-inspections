@@ -64,9 +64,9 @@ export default function RootLayout({
               <span className="font-semibold tracking-tight">Empire Electrical Solutions</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
-              <Link href="/pay">Pay</Link>
               <Link href="/services">Services</Link>
               <Link href="/about">About</Link>
+              <Link href="/pay">Pay</Link>
               <Link href="/contact">Contact</Link>
             </nav>
             <nav className="flex md:hidden justify-end">
