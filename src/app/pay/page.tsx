@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { Check } from "lucide-react";
 
 // Payment identifiers
 const CASH_TAG = "empiresolutions21";           // no '$'
@@ -24,21 +25,41 @@ const venmoWebLink = () => `https://venmo.com/${VENMO_USERNAME}?txn=pay`;
 const cashAppLink = () => `cashapp://pay?recipient=$${CASH_TAG}`;
 const cashWebLink = () => `https://cash.app/$${CASH_TAG}`;
 
-export default function PayPage() {
-  const isMobile = useIsMobile();
-  const [copyStates, setCopyStates] = React.useState<Record<string, boolean>>({});
+// CopyPill component
+function CopyPill({ value, ariaLabel }: { value: string; ariaLabel: string }) {
+  const [copied, setCopied] = React.useState(false);
 
-  const handleCopy = async (text: string, key: string) => {
+  const handleCopy = async () => {
     try {
-      await navigator.clipboard.writeText(text);
-      setCopyStates(prev => ({ ...prev, [key]: true }));
-      setTimeout(() => {
-        setCopyStates(prev => ({ ...prev, [key]: false }));
-      }, 1200);
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1200);
     } catch (err) {
       console.error("Failed to copy: ", err);
     }
   };
+
+  return (
+    <div className="inline-flex items-center gap-2 rounded-lg bg-white/60 px-3 py-1 font-mono text-sm shadow-sm">
+      {copied && <Check className="w-3 h-3 text-green-600" />}
+      <span className="truncate">{value}</span>
+      <button
+        type="button"
+        className="rounded-full border px-2 py-0.5 text-xs hover:bg-black/10 transition"
+        aria-label={ariaLabel}
+        onClick={handleCopy}
+      >
+        Copy
+      </button>
+      <span className="sr-only" aria-live="polite">
+        {copied ? "Copied to clipboard" : ""}
+      </span>
+    </div>
+  );
+}
+
+export default function PayPage() {
+  const isMobile = useIsMobile();
 
   return (
     <main className="min-h-screen py-8 px-4">
@@ -58,7 +79,9 @@ export default function PayPage() {
           {/* Venmo Card */}
           <div className="bg-blue-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">💸 Venmo</h3>
-            <p className="text-slate-900 font-medium mb-2">@{VENMO_USERNAME}</p>
+            <div className="mb-2">
+              <CopyPill value={`@${VENMO_USERNAME}`} ariaLabel="Copy Venmo username" />
+            </div>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
             <div className="space-y-2">
@@ -68,27 +91,18 @@ export default function PayPage() {
                   className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
                   aria-label="Open Venmo app"
                 >
-                  Open in App
+                  Open Venmo
                 </button>
               ) : (
-                <>
-                  <button
-                    onClick={() => handleCopy(`@${VENMO_USERNAME}`, "venmo-username")}
-                    className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                    aria-label="Copy Venmo username"
-                  >
-                    {copyStates["venmo-username"] ? "Copied!" : "Copy Handle"}
-                  </button>
-                  <a
-                    href={venmoWebLink()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center text-blue-600 hover:text-blue-800 text-sm underline"
-                    aria-label="Open Venmo web profile"
-                  >
-                    Open Web
-                  </a>
-                </>
+                <a
+                  href={venmoWebLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1 underline-offset-2 hover:underline text-blue-600 hover:text-blue-800 text-sm"
+                  aria-label="Open Venmo web profile"
+                >
+                  Open Venmo
+                </a>
               )}
             </div>
           </div>
@@ -96,7 +110,9 @@ export default function PayPage() {
           {/* Cash App Card */}
           <div className="bg-green-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">💵 Cash App</h3>
-            <p className="text-slate-900 font-medium mb-2">${CASH_TAG}</p>
+            <div className="mb-2">
+              <CopyPill value={`$${CASH_TAG}`} ariaLabel="Copy Cash App tag" />
+            </div>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
             <div className="space-y-2">
@@ -106,27 +122,18 @@ export default function PayPage() {
                   className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors"
                   aria-label="Open Cash App"
                 >
-                  Open in App
+                  Open Cash App
                 </button>
               ) : (
-                <>
-                  <button
-                    onClick={() => handleCopy(`$${CASH_TAG}`, "cashapp-tag")}
-                    className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors"
-                    aria-label="Copy Cash App tag"
-                  >
-                    {copyStates["cashapp-tag"] ? "Copied!" : "Copy Handle"}
-                  </button>
-                  <a
-                    href={cashWebLink()}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center text-green-600 hover:text-green-800 text-sm underline"
-                    aria-label="Open Cash App web profile"
-                  >
-                    Open Web
-                  </a>
-                </>
+                <a
+                  href={cashWebLink()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-3 inline-flex items-center gap-1 underline-offset-2 hover:underline text-green-600 hover:text-green-800 text-sm"
+                  aria-label="Open Cash App web profile"
+                >
+                  Open Cash App
+                </a>
               )}
             </div>
           </div>
@@ -134,33 +141,16 @@ export default function PayPage() {
           {/* Zelle Card */}
           <div className="bg-purple-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">🏦 Zelle</h3>
-            <p className="text-slate-900 font-medium mb-2">{ZELLE_PHONE}</p>
-            <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
-            
-            <div className="space-y-2">
-              <button
-                onClick={() => handleCopy(ZELLE_PHONE, "zelle-phone")}
-                className="w-full bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors"
-                aria-label="Copy Zelle phone number"
-              >
-                {copyStates["zelle-phone"] ? "Copied!" : "Copy Number"}
-              </button>
-              <a
-                href="https://www.zellepay.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block w-full text-center text-purple-600 hover:text-purple-800 text-sm underline"
-                aria-label="Learn about Zelle"
-              >
-                What is Zelle?
-              </a>
+            <div className="mb-2">
+              <CopyPill value={ZELLE_PHONE} ariaLabel="Copy Zelle phone number" />
             </div>
+            <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
           </div>
 
           {/* Square Card */}
           <div className="bg-gray-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">💳 Square</h3>
-            <p className="text-slate-900 font-medium mb-2">Call the office</p>
+            <p className="font-mono mb-2">{OFFICE_PHONE}</p>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
             <div className="space-y-2">
