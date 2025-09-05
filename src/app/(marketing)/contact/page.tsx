@@ -1,23 +1,57 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactForm, contactSchema, inspectionTypeEnum } from "@/lib/validation";
+import { ContactForm, contactSchema, inspectionTypeEnum, combineDateTime, getTodayString } from "@/lib/validation";
 import { useState } from "react";
 
 
 export default function Page() {
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
   });
 
   async function onSubmit(data: ContactForm) {
-    const resp = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
-    if (resp.ok) setSubmitted(true);
+    try {
+      setSubmitError(null);
+      
+      // Combine date and time into ISO string
+      const preferredDateTime = data.preferredDate && data.preferredTime 
+        ? combineDateTime(data.preferredDate, data.preferredTime)
+        : undefined;
+
+      const payload = {
+        ...data,
+        preferredDateTime,
+      };
+
+      const resp = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await resp.json();
+
+      if (resp.ok && result.ok) {
+        setSubmitted(true);
+      } else {
+        // Handle different error types
+        if (resp.status === 400) {
+          setSubmitError(result.details?.fieldErrors ? 
+            "Please check the form for errors and try again." : 
+            result.error || "Invalid form data. Please check your inputs.");
+        } else if (resp.status === 429) {
+          setSubmitError("Too many requests. Please wait a moment and try again.");
+        } else {
+          setSubmitError(result.error || "Something went wrong. Please try again or call us at (610) 306-8497.");
+        }
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitError("Network error. Please check your connection and try again.");
+    }
   }
 
   return (
@@ -35,9 +69,18 @@ export default function Page() {
       </div>
       
       {submitted ? (
-        <p className="mt-4">Thanks! We&apos;ll be in touch shortly.</p>
+        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <h3 className="text-green-800 font-medium">Thank you!</h3>
+          <p className="text-green-700 mt-1">We&apos;ve received your inspection request and will contact you shortly to confirm the details.</p>
+        </div>
       ) : (
         <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate suppressHydrationWarning>
+          {submitError && (
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+              <h3 className="text-red-800 font-medium">Error</h3>
+              <p className="text-red-700 mt-1">{submitError}</p>
+            </div>
+          )}
           <input type="text" className="hidden" aria-hidden="true" tabIndex={-1} {...register("_hp")} suppressHydrationWarning />
           <div>
             <label className="block text-sm font-medium">Name</label>
@@ -86,8 +129,33 @@ export default function Page() {
           </div>
           <div>
             <label className="block text-sm font-medium">Preferred Time</label>
-            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("preferred")} />
-            {errors.preferred && <p className="text-sm text-red-600">{errors.preferred.message}</p>}
+            <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label htmlFor="preferredDate" className="sr-only">Preferred Date</label>
+                <input 
+                  id="preferredDate"
+                  type="date" 
+                  className="w-full rounded-md border px-3 py-2" 
+                  min={getTodayString()}
+                  aria-invalid={errors.preferredDate ? "true" : "false"}
+                  {...register("preferredDate")} 
+                />
+                {errors.preferredDate && <p className="text-sm text-red-600">{errors.preferredDate.message}</p>}
+              </div>
+              <div>
+                <label htmlFor="preferredTime" className="sr-only">Preferred Time</label>
+                <input 
+                  id="preferredTime"
+                  type="time" 
+                  step="900"
+                  className="w-full rounded-md border px-3 py-2" 
+                  aria-invalid={errors.preferredTime ? "true" : "false"}
+                  {...register("preferredTime")} 
+                />
+                {errors.preferredTime && <p className="text-sm text-red-600">{errors.preferredTime.message}</p>}
+                <p className="text-xs text-muted-foreground mt-1">Times are scheduled in your local timezone.</p>
+              </div>
+            </div>
           </div>
           <div>
             <label className="block text-sm font-medium">Notes</label>
@@ -99,8 +167,11 @@ export default function Page() {
               suppressHydrationWarning
             />
           </div>
-          <button disabled={isSubmitting} className="w-full rounded-md bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
-            {isSubmitting ? "Submitting..." : "Submit"}
+          <button 
+            disabled={isSubmitting} 
+            className="w-full rounded-md bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? "Submitting..." : "Submit Request"}
           </button>
         </form>
       )}
