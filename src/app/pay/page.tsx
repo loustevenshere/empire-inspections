@@ -3,27 +3,138 @@
 import React from "react";
 import { Check } from "lucide-react";
 
-// Payment identifiers
-const CASH_TAG = "empiresolutions21";           // no '$'
-const VENMO_USERNAME = "empiresolutions-21";   // no '@'
-const ZELLE_PHONE = "267-979-9613";            // as displayed
-const OFFICE_PHONE = "610-306-8497";           // used for Square 'call the office'
+// Payment identifiers (stored without $ or @)
+const CASH_TAG = "empiresolutions21";
+const VENMO_USERNAME = "empiresolutions-21";
+const ZELLE_PHONE = "267-979-9613";
+const OFFICE_PHONE = "610-306-8497";
 
-// Mobile detector hook
+// Enhanced mobile detection hook (client-only to prevent SSR mismatches)
 function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState<boolean | null>(null);
+  
   React.useEffect(() => {
     const ua = navigator.userAgent || navigator.vendor || "";
-    setIsMobile(/android|iphone|ipad|ipod/i.test(ua));
+    const mobileRegex = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+    setIsMobile(mobileRegex.test(ua));
   }, []);
+  
   return isMobile;
 }
 
-// Deep link and web fallback utilities
-const venmoAppLink = () => `venmo://paycharge?txn=pay&recipients=${VENMO_USERNAME}`;
-const venmoWebLink = () => `https://venmo.com/${VENMO_USERNAME}?txn=pay`;
-const cashAppLink = () => `cashapp://pay?recipient=$${CASH_TAG}`;
-const cashWebLink = () => `https://cash.app/$${CASH_TAG}`;
+// Payment deep link utilities with universal links and custom schemes
+interface PaymentOptions {
+  amount?: string;
+  note?: string;
+}
+
+function createVenmoLinks(options: PaymentOptions = {}) {
+  const { amount, note } = options;
+  const params = new URLSearchParams();
+  
+  if (amount) params.set('amount', amount);
+  if (note) params.set('note', note);
+  
+  const queryString = params.toString();
+  const universalLink = `https://venmo.com/${VENMO_USERNAME}?txn=pay${queryString ? `&${queryString}` : ''}`;
+  const customScheme = `venmo://paycharge?txn=pay&recipients=${VENMO_USERNAME}${queryString ? `&${queryString}` : ''}`;
+  
+  return { universalLink, customScheme };
+}
+
+function createCashAppLinks(options: PaymentOptions = {}) {
+  const { amount, note } = options;
+  const params = new URLSearchParams();
+  
+  if (amount) params.set('amount', amount);
+  if (note) params.set('note', note);
+  
+  const queryString = params.toString();
+  const universalLink = `https://cash.app/$${CASH_TAG}${queryString ? `?${queryString}` : ''}`;
+  const customScheme = `cashapp://pay?recipient=$${CASH_TAG}${queryString ? `&${queryString}` : ''}`;
+  
+  return { universalLink, customScheme };
+}
+
+// Enhanced payment handler with app-first approach and fallback
+function usePaymentHandler() {
+  const isMobile = useIsMobile();
+  
+  const handlePayment = React.useCallback((paymentType: 'venmo' | 'cashapp', options: PaymentOptions = {}) => {
+    if (isMobile === null) return; // Wait for mobile detection
+    
+    let links;
+    if (paymentType === 'venmo') {
+      links = createVenmoLinks(options);
+    } else {
+      links = createCashAppLinks(options);
+    }
+    
+    if (isMobile) {
+      // Mobile: Try app first, then fallback to universal link
+      try {
+        const appWindow = window.open(links.customScheme, '_blank');
+        
+        // Fallback to universal link after 600ms if app didn't open
+        setTimeout(() => {
+          try {
+            if (appWindow && !appWindow.closed) {
+              // App opened successfully, close the fallback
+              appWindow.close();
+            } else {
+              // App didn't open, use universal link
+              window.open(links.universalLink, '_blank');
+            }
+          } catch (error) {
+            console.warn('Payment fallback error:', error);
+            // Final fallback to universal link
+            window.open(links.universalLink, '_blank');
+          }
+        }, 600);
+      } catch (error) {
+        console.warn('Payment app error:', error);
+        // If custom scheme fails, use universal link immediately
+        window.open(links.universalLink, '_blank');
+      }
+    } else {
+      // Desktop: Use universal link directly
+      window.open(links.universalLink, '_blank');
+    }
+  }, [isMobile]);
+  
+  return { handlePayment, isMobile };
+}
+
+// Helper functions for common payment scenarios
+export const paymentHelpers = {
+  // Create a payment link with amount and note
+  createPaymentLink: (type: 'venmo' | 'cashapp', amount?: string, note?: string) => {
+    const options: PaymentOptions = {};
+    if (amount) options.amount = amount;
+    if (note) options.note = note;
+    
+    if (type === 'venmo') {
+      return createVenmoLinks(options);
+    } else {
+      return createCashAppLinks(options);
+    }
+  },
+  
+  // Format amount for display
+  formatAmount: (amount: string | number) => {
+    const num = typeof amount === 'string' ? parseFloat(amount) : amount;
+    return isNaN(num) ? amount.toString() : `$${num.toFixed(2)}`;
+  },
+  
+  // Create a note with inspection details
+  createInspectionNote: (address: string, permitNumber?: string) => {
+    let note = `Inspection - ${address}`;
+    if (permitNumber) {
+      note += ` (Permit #${permitNumber})`;
+    }
+    return note;
+  }
+};
 
 // CopyPill component
 function CopyPill({ value, ariaLabel }: { value: string; ariaLabel: string }) {
@@ -59,7 +170,7 @@ function CopyPill({ value, ariaLabel }: { value: string; ariaLabel: string }) {
 }
 
 export default function PayPage() {
-  const isMobile = useIsMobile();
+  const { handlePayment, isMobile } = usePaymentHandler();
 
   return (
     <main className="min-h-screen py-8 px-4">
@@ -85,25 +196,14 @@ export default function PayPage() {
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
             <div className="space-y-2">
-              {isMobile ? (
-                <button
-                  onClick={() => window.open(venmoAppLink(), "_blank")}
-                  className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-                  aria-label="Open Venmo app"
-                >
-                  Open Venmo
-                </button>
-              ) : (
-                <a
-                  href={venmoWebLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-1 underline-offset-2 hover:underline text-blue-600 hover:text-blue-800 text-sm"
-                  aria-label="Open Venmo web profile"
-                >
-                  Open Venmo
-                </a>
-              )}
+              <button
+                onClick={() => handlePayment('venmo')}
+                disabled={isMobile === null}
+                className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Open Venmo"
+              >
+                {isMobile === null ? 'Loading...' : 'Open Venmo'}
+              </button>
             </div>
           </div>
 
@@ -116,25 +216,14 @@ export default function PayPage() {
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
             <div className="space-y-2">
-              {isMobile ? (
-                <button
-                  onClick={() => window.open(cashAppLink(), "_blank")}
-                  className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors"
-                  aria-label="Open Cash App"
-                >
-                  Open Cash App
-                </button>
-              ) : (
-                <a
-                  href={cashWebLink()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-3 inline-flex items-center gap-1 underline-offset-2 hover:underline text-green-600 hover:text-green-800 text-sm"
-                  aria-label="Open Cash App web profile"
-                >
-                  Open Cash App
-                </a>
-              )}
+              <button
+                onClick={() => handlePayment('cashapp')}
+                disabled={isMobile === null}
+                className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                aria-label="Open Cash App"
+              >
+                {isMobile === null ? 'Loading...' : 'Open Cash App'}
+              </button>
             </div>
           </div>
 

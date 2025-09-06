@@ -1,13 +1,25 @@
 "use client";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactForm, contactSchema, inspectionTypeEnum, combineDateTime, getTodayString } from "@/lib/validation";
-import { useState } from "react";
 
+
+// Custom hook to handle hydration safely
+function useHydrationSafe() {
+  const [isHydrated, setIsHydrated] = useState(false);
+  
+  React.useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+  
+  return isHydrated;
+}
 
 export default function Page() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const isHydrated = useHydrationSafe();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
   });
@@ -73,6 +85,25 @@ export default function Page() {
           <h3 className="text-green-800 font-medium">Thank you!</h3>
           <p className="text-green-700 mt-1">We&apos;ve received your inspection request and will contact you shortly to confirm the details.</p>
         </div>
+      ) : !isHydrated ? (
+        <div className="mt-6 space-y-4">
+          <div className="animate-pulse">
+            <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+            <div className="h-10 bg-gray-200 rounded mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+            <div className="h-10 bg-gray-200 rounded mb-4"></div>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                <div className="h-10 bg-gray-200 rounded"></div>
+              </div>
+              <div>
+                <div className="h-4 bg-gray-200 rounded w-1/4 mb-2"></div>
+                <div className="h-10 bg-gray-200 rounded"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       ) : (
         <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate suppressHydrationWarning>
           {submitError && (
@@ -84,39 +115,39 @@ export default function Page() {
           <input type="text" className="hidden" aria-hidden="true" tabIndex={-1} {...register("_hp")} suppressHydrationWarning />
           <div>
             <label className="block text-sm font-medium">Name</label>
-            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("name")} />
+            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("name")} suppressHydrationWarning />
             {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
           </div>
           <div>
             <label className="block text-sm font-medium">Company (optional)</label>
-            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("company")} />
+            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("company")} suppressHydrationWarning />
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium">Phone</label>
-              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("phone")} />
+              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("phone")} suppressHydrationWarning />
               {errors.phone && <p className="text-sm text-red-600">{errors.phone.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium">Email</label>
-              <input type="email" className="mt-1 w-full rounded-md border px-3 py-2" {...register("email")} />
+              <input type="email" className="mt-1 w-full rounded-md border px-3 py-2" {...register("email")} suppressHydrationWarning />
               {errors.email && <p className="text-sm text-red-600">{errors.email.message}</p>}
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium">Job Address</label>
-            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("jobAddress")} />
+            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("jobAddress")} suppressHydrationWarning />
             {errors.jobAddress && <p className="text-sm text-red-600">{errors.jobAddress.message}</p>}
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium">Municipality</label>
-              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("municipality")} />
+              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("municipality")} suppressHydrationWarning />
               {errors.municipality && <p className="text-sm text-red-600">{errors.municipality.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium">Inspection Type</label>
-              <select className="mt-1 w-full rounded-md border px-3 py-2" {...register("inspectionType")}>
+              <select className="mt-1 w-full rounded-md border px-3 py-2" {...register("inspectionType")} suppressHydrationWarning>
                 <option value="" disabled>
                   Select inspection type...
                 </option>
@@ -139,6 +170,7 @@ export default function Page() {
                   min={getTodayString()}
                   aria-invalid={errors.preferredDate ? "true" : "false"}
                   {...register("preferredDate")} 
+                  suppressHydrationWarning
                 />
                 {errors.preferredDate && <p className="text-sm text-red-600">{errors.preferredDate.message}</p>}
               </div>
@@ -151,6 +183,7 @@ export default function Page() {
                   className="w-full rounded-md border px-3 py-2" 
                   aria-invalid={errors.preferredTime ? "true" : "false"}
                   {...register("preferredTime")} 
+                  suppressHydrationWarning
                 />
                 {errors.preferredTime && <p className="text-sm text-red-600">{errors.preferredTime.message}</p>}
                 <p className="text-xs text-muted-foreground mt-1">Times are scheduled in your local timezone.</p>
