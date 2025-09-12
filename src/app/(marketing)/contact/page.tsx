@@ -67,7 +67,7 @@ export default function Page() {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className="mx-auto max-w-2xl px-4 py-8" data-testid="contact-page">
       <h1 className="text-2xl font-bold">Request Inspection</h1>
       
       {/* Business Information */}
@@ -81,7 +81,7 @@ export default function Page() {
       </div>
       
       {submitted ? (
-        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg">
+        <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg" data-testid="contact-success">
           <h3 className="text-green-800 font-medium">Thank you!</h3>
           <p className="text-green-700 mt-1">We&apos;ve received your inspection request and will contact you shortly to confirm the details.</p>
         </div>
@@ -107,7 +107,7 @@ export default function Page() {
       ) : (
         <form className="mt-6 space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate suppressHydrationWarning>
           {submitError && (
-            <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-lg" data-testid="contact-error">
               <h3 className="text-red-800 font-medium">Error</h3>
               <p className="text-red-700 mt-1">{submitError}</p>
             </div>
@@ -115,7 +115,7 @@ export default function Page() {
           <input type="text" className="hidden" aria-hidden="true" tabIndex={-1} {...register("_hp")} suppressHydrationWarning />
           <div>
             <label className="block text-sm font-medium">Name</label>
-            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("name")} suppressHydrationWarning />
+            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("name")} data-testid="name" suppressHydrationWarning />
             {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
           </div>
           <div>
@@ -125,29 +125,29 @@ export default function Page() {
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium">Phone</label>
-              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("phone")} suppressHydrationWarning />
+              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("phone")} data-testid="phone" suppressHydrationWarning />
               {errors.phone && <p className="text-sm text-red-600">{errors.phone.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium">Email</label>
-              <input type="email" className="mt-1 w-full rounded-md border px-3 py-2" {...register("email")} suppressHydrationWarning />
+              <input type="email" className="mt-1 w-full rounded-md border px-3 py-2" {...register("email")} data-testid="email" suppressHydrationWarning />
               {errors.email && <p className="text-sm text-red-600">{errors.email.message}</p>}
             </div>
           </div>
           <div>
             <label className="block text-sm font-medium">Job Address</label>
-            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("jobAddress")} suppressHydrationWarning />
+            <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("jobAddress")} data-testid="jobAddress" suppressHydrationWarning />
             {errors.jobAddress && <p className="text-sm text-red-600">{errors.jobAddress.message}</p>}
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
               <label className="block text-sm font-medium">Municipality</label>
-              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("municipality")} suppressHydrationWarning />
+              <input className="mt-1 w-full rounded-md border px-3 py-2" {...register("municipality")} data-testid="municipality" suppressHydrationWarning />
               {errors.municipality && <p className="text-sm text-red-600">{errors.municipality.message}</p>}
             </div>
             <div>
               <label className="block text-sm font-medium">Inspection Type</label>
-              <select className="mt-1 w-full rounded-md border px-3 py-2" {...register("inspectionType")} suppressHydrationWarning>
+              <select className="mt-1 w-full rounded-md border px-3 py-2" {...register("inspectionType")} data-testid="inspectionType" suppressHydrationWarning>
                 <option value="" disabled>
                   Select inspection type...
                 </option>
@@ -170,6 +170,7 @@ export default function Page() {
                   min={getTodayString()}
                   aria-invalid={errors.preferredDate ? "true" : "false"}
                   {...register("preferredDate")} 
+                  data-testid="preferredDate"
                   suppressHydrationWarning
                 />
                 {errors.preferredDate && <p className="text-sm text-red-600">{errors.preferredDate.message}</p>}
@@ -183,6 +184,7 @@ export default function Page() {
                   className="w-full rounded-md border px-3 py-2" 
                   aria-invalid={errors.preferredTime ? "true" : "false"}
                   {...register("preferredTime")} 
+                  data-testid="preferredTime"
                   suppressHydrationWarning
                 />
                 {errors.preferredTime && <p className="text-sm text-red-600">{errors.preferredTime.message}</p>}
@@ -197,12 +199,14 @@ export default function Page() {
               className="mt-1 w-full rounded-md border px-3 py-2" 
               {...register("notes")} 
               placeholder="Please provide your permit # if applicable"
+              data-testid="notes"
               suppressHydrationWarning
             />
           </div>
           <button 
             disabled={isSubmitting} 
             className="w-full rounded-md bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60 disabled:cursor-not-allowed"
+            data-testid="contact-submit"
           >
             {isSubmitting ? "Submitting..." : "Submit Request"}
           </button>

@@ -21,3 +21,8 @@ export function allow(ip: string): boolean {
   return true;
 }
 
+// For testing purposes - reset all rate limiting state
+export function resetRateLimit(): void {
+  buckets.clear();
+}
+

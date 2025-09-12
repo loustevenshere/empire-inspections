@@ -137,7 +137,7 @@ export const paymentHelpers = {
 };
 
 // CopyPill component
-function CopyPill({ value, ariaLabel }: { value: string; ariaLabel: string }) {
+function CopyPill({ value, ariaLabel, testId }: { value: string; ariaLabel: string; testId?: string }) {
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = async () => {
@@ -159,6 +159,7 @@ function CopyPill({ value, ariaLabel }: { value: string; ariaLabel: string }) {
         className="rounded-full border px-2 py-0.5 text-xs hover:bg-black/10 transition"
         aria-label={ariaLabel}
         onClick={handleCopy}
+        data-testid={testId}
       >
         Copy
       </button>
@@ -173,7 +174,7 @@ export default function PayPage() {
   const { handlePayment, isMobile } = usePaymentHandler();
 
   return (
-    <main className="min-h-screen py-8 px-4">
+    <main className="min-h-screen py-8 px-4" data-testid="payments-page">
       <div className="max-w-6xl mx-auto">
         {/* Page Header */}
         <div className="text-center mb-8">
@@ -191,7 +192,8 @@ export default function PayPage() {
           <div className="bg-blue-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">💸 Venmo</h3>
             <div className="mb-2">
-              <CopyPill value={`@${VENMO_USERNAME}`} ariaLabel="Copy Venmo username" />
+              <CopyPill value={`@${VENMO_USERNAME}`} ariaLabel="Copy Venmo username" testId="copy-venmo" />
+              <span data-testid="venmo-handle" className="sr-only">@{VENMO_USERNAME}</span>
             </div>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
@@ -201,6 +203,7 @@ export default function PayPage() {
                 disabled={isMobile === null}
                 className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Open Venmo"
+                data-testid="open-venmo"
               >
                 {isMobile === null ? 'Loading...' : 'Open Venmo'}
               </button>
@@ -211,7 +214,8 @@ export default function PayPage() {
           <div className="bg-green-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">💵 Cash App</h3>
             <div className="mb-2">
-              <CopyPill value={`$${CASH_TAG}`} ariaLabel="Copy Cash App tag" />
+              <CopyPill value={`$${CASH_TAG}`} ariaLabel="Copy Cash App tag" testId="copy-cash" />
+              <span data-testid="cash-handle" className="sr-only">${CASH_TAG}</span>
             </div>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
@@ -221,6 +225,7 @@ export default function PayPage() {
                 disabled={isMobile === null}
                 className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 aria-label="Open Cash App"
+                data-testid="open-cashapp"
               >
                 {isMobile === null ? 'Loading...' : 'Open Cash App'}
               </button>
@@ -231,7 +236,8 @@ export default function PayPage() {
           <div className="bg-purple-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">🏦 Zelle</h3>
             <div className="mb-2">
-              <CopyPill value={ZELLE_PHONE} ariaLabel="Copy Zelle phone number" />
+              <CopyPill value={ZELLE_PHONE} ariaLabel="Copy Zelle phone number" testId="copy-zelle" />
+              <span data-testid="zelle-handle" className="sr-only">{ZELLE_PHONE}</span>
             </div>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
           </div>

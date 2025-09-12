@@ -4,7 +4,12 @@ This is a Next.js 14 (App Router) + TypeScript project for Empire Home Inspectio
 
 Quick start
 
-1. Copy `.env.example` to `.env.local` and fill in values as needed.
+1. Create `.env.local` and add the following environment variables:
+   ```bash
+   # Contact Form Proxy Configuration
+   CONTACT_API_URL="https://<apiId>.execute-api.us-east-1.amazonaws.com/prod/contact"
+   CONTACT_SHARED_SECRET="<optional-strong-random-string>"
+   ```
 2. Install deps: `npm install`
 3. Run dev server: `npm run dev`
 
@@ -13,8 +18,8 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 Notes
 
 - Plausible only loads if `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` is set.
-- Contact API uses DEV MODE if SES envs are missing and will not block local dev.
-- TODO: Amplify hosting and AWS SES setup instructions.
+- Contact API uses DEV MODE if `CONTACT_API_URL` is not set and will not block local dev.
+- AWS credentials and email configuration are now handled by the Lambda function, not the web app.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font).
 
