@@ -11,17 +11,38 @@ const VENMO_USERNAME = "empiresolutions-21";
 const ZELLE_PHONE = "267-979-9613";
 // Office phone will be imported from config
 
-// Enhanced mobile detection hook (client-only to prevent SSR mismatches)
-function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | null>(null);
+// Enhanced environment detection hook (client-only to prevent SSR mismatches)
+function useEnv() {
+  const [env, setEnv] = React.useState<{
+    isMobile: boolean | null;
+    isIOS: boolean | null;
+    inApp: boolean | null;
+  }>({
+    isMobile: null,
+    isIOS: null,
+    inApp: null,
+  });
   
   React.useEffect(() => {
     const ua = navigator.userAgent || navigator.vendor || "";
+    
+    // Mobile detection
     const mobileRegex = /android|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
-    setIsMobile(mobileRegex.test(ua));
+    const isMobile = mobileRegex.test(ua);
+    
+    // iOS detection
+    const isIOS = /iphone|ipad|ipod/i.test(ua);
+    
+    // In-app browser detection (Instagram, Facebook, TikTok, etc.)
+    const inAppRegex = /instagram|fban|fbav|fbsv|fba|fbi|fbios|fb_iab|fb_ios|fb_android|tiktok|snapchat|line|wechat|whatsapp/i;
+    const inApp = inAppRegex.test(ua) || 
+                  ((window.navigator as Navigator & { standalone?: boolean }).standalone === false && isIOS) || // iOS web app mode
+                  (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches === false && isMobile);
+    
+    setEnv({ isMobile, isIOS, inApp });
   }, []);
   
-  return isMobile;
+  return env;
 }
 
 // Payment deep link utilities with universal links and custom schemes
@@ -34,8 +55,18 @@ function createVenmoLinks(options: PaymentOptions = {}) {
   const { amount, note } = options;
   const params = new URLSearchParams();
   
-  if (amount) params.set('amount', amount);
-  if (note) params.set('note', note);
+  // Sanitize amount to always be a number with two decimals
+  if (amount) {
+    const numAmount = parseFloat(amount.toString());
+    if (!isNaN(numAmount)) {
+      params.set('amount', numAmount.toFixed(2));
+    }
+  }
+  
+  // Encode note safely
+  if (note) {
+    params.set('note', encodeURIComponent(note));
+  }
   
   const queryString = params.toString();
   const universalLink = `https://venmo.com/${VENMO_USERNAME}?txn=pay${queryString ? `&${queryString}` : ''}`;
@@ -48,22 +79,33 @@ function createCashAppLinks(options: PaymentOptions = {}) {
   const { amount, note } = options;
   const params = new URLSearchParams();
   
-  if (amount) params.set('amount', amount);
-  if (note) params.set('note', note);
+  // Sanitize amount to always be a number with two decimals
+  if (amount) {
+    const numAmount = parseFloat(amount.toString());
+    if (!isNaN(numAmount)) {
+      params.set('amount', numAmount.toFixed(2));
+    }
+  }
+  
+  // Encode note safely
+  if (note) {
+    params.set('note', encodeURIComponent(note));
+  }
   
   const queryString = params.toString();
+  // Use the official universal link format
   const universalLink = `https://cash.app/$${CASH_TAG}${queryString ? `?${queryString}` : ''}`;
   const customScheme = `cashapp://pay?recipient=$${CASH_TAG}${queryString ? `&${queryString}` : ''}`;
   
   return { universalLink, customScheme };
 }
 
-// Enhanced payment handler with app-first approach and fallback
+// Enhanced payment handler with platform-specific logic
 function usePaymentHandler() {
-  const isMobile = useIsMobile();
+  const { isMobile, isIOS, inApp } = useEnv();
   
   const handlePayment = React.useCallback((paymentType: 'venmo' | 'cashapp', options: PaymentOptions = {}) => {
-    if (isMobile === null) return; // Wait for mobile detection
+    if (isMobile === null || isIOS === null || inApp === null) return; // Wait for environment detection
     
     let links;
     if (paymentType === 'venmo') {
@@ -72,12 +114,53 @@ function usePaymentHandler() {
       links = createCashAppLinks(options);
     }
     
-    if (isMobile) {
-      // Mobile: Try app first, then fallback to universal link
+    // If mobile and in-app browser, always use universal link
+    if (isMobile && inApp) {
+      window.open(links.universalLink, '_blank');
+      return;
+    }
+    
+    // iOS Safari/Chrome
+    if (isMobile && isIOS) {
+      try {
+        // Try to open the app using window.location.href
+        window.location.href = links.customScheme;
+        
+        // Set up visibility change listener and timeout fallback
+        let hasReturned = false;
+        
+        const handleVisibilityChange = () => {
+          if (document.visibilityState === 'visible' && !hasReturned) {
+            hasReturned = true;
+            clearTimeout(fallbackTimeout);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+          }
+        };
+        
+        const fallbackToUniversal = () => {
+          if (!hasReturned) {
+            hasReturned = true;
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            window.open(links.universalLink, '_blank');
+          }
+        };
+        
+        document.addEventListener('visibilitychange', handleVisibilityChange);
+        const fallbackTimeout = setTimeout(fallbackToUniversal, 2000);
+        
+      } catch (error) {
+        console.warn('Payment app error:', error);
+        window.open(links.universalLink, '_blank');
+      }
+      return;
+    }
+    
+    // Android
+    if (isMobile && !isIOS) {
       try {
         const appWindow = window.open(links.customScheme, '_blank');
         
-        // Fallback to universal link after 600ms if app didn't open
+        // Fallback to universal link after 1.5 seconds if app didn't open
         setTimeout(() => {
           try {
             if (appWindow && !appWindow.closed) {
@@ -89,20 +172,19 @@ function usePaymentHandler() {
             }
           } catch (error) {
             console.warn('Payment fallback error:', error);
-            // Final fallback to universal link
             window.open(links.universalLink, '_blank');
           }
-        }, 600);
+        }, 1500);
       } catch (error) {
         console.warn('Payment app error:', error);
-        // If custom scheme fails, use universal link immediately
         window.open(links.universalLink, '_blank');
       }
-    } else {
-      // Desktop: Use universal link directly
-      window.open(links.universalLink, '_blank');
+      return;
     }
-  }, [isMobile]);
+    
+    // Desktop: Always open universal link in new tab
+    window.open(links.universalLink, '_blank');
+  }, [isMobile, isIOS, inApp]);
   
   return { handlePayment, isMobile };
 }
