@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { contactSchema } from "@/lib/validation";
 import { allow } from "@/lib/rateLimit";
+import { getPrimaryPhone } from "@/config/contact";
 import crypto from "crypto";
 
 function getIp(req: NextRequest) {
@@ -77,7 +78,8 @@ export async function POST(req: NextRequest) {
     if (!upstream.ok) {
       const text = await upstream.text().catch(() => "");
       console.error("Upstream contact error:", upstream.status, text);
-      return NextResponse.json({ ok: false, error: "Error sending email - please try again or call us at (610) 306-8497." }, { status: 502 });
+      const primary = getPrimaryPhone();
+      return NextResponse.json({ ok: false, error: `Error sending email - please try again or call us at ${primary.human}.` }, { status: 502 });
     }
 
     const out = await upstream.json().catch(() => ({ ok: true }));

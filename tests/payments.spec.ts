@@ -124,7 +124,7 @@ test.describe('Payment Page', () => {
     // Check Square card has call button
     const callButton = page.locator('text=Call the Office');
     await expect(callButton).toBeVisible();
-    await expect(callButton).toHaveAttribute('href', 'tel:610-306-8497');
+    await expect(callButton).toHaveAttribute('href', 'tel:+12158398997');
   });
 });
 

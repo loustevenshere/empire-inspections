@@ -2,12 +2,14 @@
 
 import React from "react";
 import { Check } from "lucide-react";
+import { getPrimaryPhone } from "@/config/contact";
+import { toTelHref } from "@/lib/phone";
 
 // Payment identifiers (stored without $ or @)
 const CASH_TAG = "empiresolutions21";
 const VENMO_USERNAME = "empiresolutions-21";
 const ZELLE_PHONE = "267-979-9613";
-const OFFICE_PHONE = "610-306-8497";
+// Office phone will be imported from config
 
 // Enhanced mobile detection hook (client-only to prevent SSR mismatches)
 function useIsMobile() {
@@ -172,6 +174,7 @@ function CopyPill({ value, ariaLabel, testId }: { value: string; ariaLabel: stri
 
 export default function PayPage() {
   const { handlePayment, isMobile } = usePaymentHandler();
+  const primary = getPrimaryPhone();
 
   return (
     <main className="min-h-screen py-8 px-4" data-testid="payments-page">
@@ -245,14 +248,14 @@ export default function PayPage() {
           {/* Square Card */}
           <div className="bg-gray-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">💳 Square</h3>
-            <p className="font-mono mb-2">{OFFICE_PHONE}</p>
+            <p className="font-mono mb-2">{primary.human}</p>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
             <div className="space-y-2">
               <a
-                href={`tel:${OFFICE_PHONE}`}
+                href={toTelHref(primary.e164)}
                 className="block w-full bg-gray-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-700 transition-colors text-center"
-                aria-label="Call the office"
+                aria-label={`Call the office at ${primary.human}`}
               >
                 Call the Office
               </a>
