@@ -10,8 +10,6 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
 
 # next.js
 /.next/
@@ -43,6 +41,3 @@ next-env.d.ts
 # AWS local credentials/config
 AWS/
 
-# Playwright outputs
-playwright-report/
-test-results/
