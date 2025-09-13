@@ -76,7 +76,7 @@ export default function Page() {
       
       {/* Business Information */}
       <div className="mt-4 p-4 bg-muted/30 rounded-lg">
-        <h2 className="font-medium mb-2">Empire Electrical Solutions</h2>
+        <h2 className="font-medium mb-2">Empire Inspection Agency</h2>
         <p className="text-sm text-muted-foreground mb-1">6901 Germantown Avenue, Suite 200</p>
         <p className="text-sm text-muted-foreground mb-2">Philadelphia, PA 19119</p>
         <div className="space-y-1 text-sm">

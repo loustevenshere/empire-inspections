@@ -19,36 +19,36 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Empire Electrical Solutions — Electrical Inspections, Philadelphia PA",
+  title: "Empire Inspection Agency — Electrical Inspections, Philadelphia PA",
   description:
     "Independent electrical inspections for contractors and builders in Philadelphia. Fast scheduling, clear reports, and NEC-compliant guidance.",
   metadataBase: new URL("https://example.com"), // replace after deploying
   icons: {
-    icon: "/empireinspectionlogo.png",
-    apple: "/empireinspectionlogo.png",
+    icon: "/empire-inspection-agency.png",
+    apple: "/empire-inspection-agency.png",
   },
   openGraph: {
-    title: "Empire Electrical Solutions",
+    title: "Empire Inspection Agency",
     description:
       "Independent electrical inspections for contractors and builders in Philadelphia.",
     url: "https://example.com",
-    siteName: "Empire Electrical Solutions",
+    siteName: "Empire Inspection Agency",
     type: "website",
     images: [
       {
-        url: "/empireinspectionlogo.png",
+        url: "/empire-inspection-agency.png",
         width: 1200,
         height: 630,
-        alt: "Empire Electrical Solutions Logo",
+        alt: "Empire Inspection Agency Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/empireinspectionlogo.png"],
+    images: ["/empire-inspection-agency.png"],
   },
   other: {
-    "msapplication-TileImage": "/empireinspectionlogo.png",
+    "msapplication-TileImage": "/empire-inspection-agency.png",
     "msapplication-TileColor": "#ffffff",
   },
   robots: { index: true, follow: true },
@@ -77,7 +77,7 @@ export default function RootLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Empire Solutions",
+            "name": "Empire Inspection Agency",
             "telephone": [phones.primary.e164, phones.secondary.e164],
             "contactPoint": [
               {
@@ -101,14 +101,14 @@ export default function RootLayout({
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
             <Link href="/" className="flex items-center gap-3">
               <Image 
-                src="/logo-empire.jpeg" 
-                alt="Empire Electrical Solutions" 
+                src="/empire-inspection-agency.png" 
+                alt="Empire Inspection Agency" 
                 width={140} 
                 height={48} 
                 priority 
-                className="h-8 sm:h-10 w-auto"
+                className="h-10 sm:h-12 w-auto object-contain"
               />
-              <span className="font-semibold tracking-tight">Empire Electrical Solutions</span>
+              <span className="font-semibold tracking-tight text-lg">Empire Inspection Agency</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
               <Link href="/services">Services</Link>
@@ -124,7 +124,7 @@ export default function RootLayout({
         <main className="min-h-[80svh]">{children}</main>
         <footer className="border-t bg-secondary/20">
           <div className="mx-auto max-w-6xl px-4 py-6 text-sm">
-            <p className="font-medium">Empire Electrical Solutions</p>
+            <p className="font-medium">Empire Inspection Agency</p>
             <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
         <div className="space-y-1 text-sm">
           <div>
@@ -151,7 +151,7 @@ export default function RootLayout({
             <p className="mt-2">
               <a href="mailto:info@empireinspectionagency.com" className="underline">info@empireinspectionagency.com</a>
             </p>
-            <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Electrical Solutions</p>
+            <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Inspection Agency</p>
           </div>
         </footer>
         <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background p-2 md:hidden">

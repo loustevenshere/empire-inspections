@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 space-y-6">
-      <h1 className="text-2xl font-bold">About Empire Electrical Solutions</h1>
+      <h1 className="text-2xl font-bold">About Empire Inspection Agency</h1>
       <p className="text-muted-foreground max-w-prose">
         With over two decades of experience as a Commercial and Residential Electrician, our full staff is committed to ensuring each project meets the highest standards of safety and compliance.
       </p>

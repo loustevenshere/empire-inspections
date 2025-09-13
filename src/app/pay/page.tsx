@@ -264,7 +264,7 @@ export default function PayPage() {
         {/* Page Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-slate-900 mb-4">
-            Pay Empire Electrical Solutions
+            Pay Empire Inspection Agency
           </h1>
           <p className="text-lg text-slate-600">
             Choose your preferred payment method below.
