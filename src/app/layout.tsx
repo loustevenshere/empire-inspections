@@ -126,26 +126,28 @@ export default function RootLayout({
           <div className="mx-auto max-w-6xl px-4 py-6 text-sm">
             <p className="font-medium">Empire Electrical Solutions</p>
             <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
-            <div className="space-y-1 text-sm">
-              <div>
-                <a
-                  href={toTelHref(primary.e164)}
-                  aria-label={`Call Empire Solutions at ${primary.human}`}
-                  className="font-semibold underline underline-offset-4"
-                >
-                  {primary.human}
-                </a>
-              </div>
-              <div>
-                <a
-                  href={toTelHref(secondary[0].e164)}
-                  aria-label={`Call Empire Solutions at ${secondary[0].human}`}
-                  className="underline underline-offset-4"
-                >
-                  {secondary[0].human}
-                </a>
-              </div>
-            </div>
+        <div className="space-y-1 text-sm">
+          <div>
+            <span className="font-semibold">{primary.label}:</span>{" "}
+            <a
+              href={toTelHref(primary.e164)}
+              aria-label={`Call Empire Solutions at ${primary.human}`}
+              className="underline underline-offset-4"
+            >
+              {primary.human}
+            </a>
+          </div>
+          <div>
+            <span className="font-semibold">{secondary[0].label}:</span>{" "}
+            <a
+              href={toTelHref(secondary[0].e164)}
+              aria-label={`Call Empire Solutions at ${secondary[0].human}`}
+              className="underline underline-offset-4"
+            >
+              {secondary[0].human}
+            </a>
+          </div>
+        </div>
             <p className="mt-2">
               <a href="mailto:info@empireinspectionagency.com" className="underline">info@empireinspectionagency.com</a>
             </p>

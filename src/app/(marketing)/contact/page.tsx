@@ -82,15 +82,17 @@ export default function Page() {
         <div className="space-y-1 text-sm">
           <p className="text-xs md:text-sm text-muted-foreground md:hidden">Tap a number to call</p>
           <div>
+            <span className="font-semibold">{primary.label}:</span>{" "}
             <a
               href={toTelHref(primary.e164)}
               aria-label={`Call Empire Solutions at ${primary.human}`}
-              className="font-semibold text-primary hover:underline underline-offset-4"
+              className="text-primary hover:underline underline-offset-4"
             >
               {primary.human}
             </a>
           </div>
           <div>
+            <span className="font-semibold">{secondary[0].label}:</span>{" "}
             <a
               href={toTelHref(secondary[0].e164)}
               aria-label={`Call Empire Solutions at ${secondary[0].human}`}
