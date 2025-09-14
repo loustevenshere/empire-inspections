@@ -23,7 +23,7 @@ export default function Home() {
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-4xl px-6 text-center text-white">
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
-            Empire Electrical Solutions
+            Empire Inspection Agency
           </h1>
           
           <p className="text-xl sm:text-2xl md:text-3xl italic mb-4 text-gray-200">

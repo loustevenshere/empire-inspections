@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 space-y-8">
-      <h1 className="text-2xl font-bold">About Empire Electrical Solutions</h1>
+      <h1 className="text-2xl font-bold">About Empire Inspection Agency</h1>
       
       {/* Main content with image */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">

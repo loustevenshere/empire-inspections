@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Empire Electrical Solutions — Electrical Inspections, Philadelphia PA",
+  title: "Empire Inspection Agency — Electrical Inspections, Philadelphia PA",
   description:
     "Independent electrical inspections for contractors and builders in Philadelphia. Fast scheduling, clear reports, and NEC-compliant guidance.",
   metadataBase: new URL("https://example.com"), // replace after deploying
@@ -28,18 +28,18 @@ export const metadata: Metadata = {
     apple: "/empireinspectionlogo.png",
   },
   openGraph: {
-    title: "Empire Electrical Solutions",
+    title: "Empire Inspection Agency",
     description:
       "Independent electrical inspections for contractors and builders in Philadelphia.",
     url: "https://example.com",
-    siteName: "Empire Electrical Solutions",
+    siteName: "Empire Inspection Agency",
     type: "website",
     images: [
       {
         url: "/empireinspectionlogo.png",
         width: 1200,
         height: 630,
-        alt: "Empire Electrical Solutions Logo",
+        alt: "Empire Inspection Agency Logo",
       },
     ],
   },
@@ -77,7 +77,7 @@ export default function RootLayout({
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Organization",
-            "name": "Empire Solutions",
+            "name": "Empire Inspection Agency",
             "telephone": [phones.primary.e164, phones.secondary.e164],
             "contactPoint": [
               {
@@ -108,7 +108,7 @@ export default function RootLayout({
                 priority 
                 className="h-8 sm:h-10 w-auto"
               />
-              <span className="font-semibold tracking-tight">Empire Electrical Solutions</span>
+              <span className="font-semibold tracking-tight">Empire Inspection Agency</span>
             </Link>
             <nav className="hidden gap-6 md:flex">
               <Link href="/services">Services</Link>
@@ -124,14 +124,14 @@ export default function RootLayout({
         <main className="min-h-[80svh]">{children}</main>
         <footer className="border-t bg-secondary/20">
           <div className="mx-auto max-w-6xl px-4 py-6 text-sm">
-            <p className="font-medium">Empire Electrical Solutions</p>
+            <p className="font-medium">Empire Inspection Agency</p>
             <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
         <div className="space-y-1 text-sm">
           <div>
             <span className="font-semibold">{primary.label}:</span>{" "}
             <a
               href={toTelHref(primary.e164)}
-              aria-label={`Call Empire Solutions at ${primary.human}`}
+              aria-label={`Call Empire Inspection Agency at ${primary.human}`}
               className="underline underline-offset-4"
             >
               {primary.human}
@@ -141,7 +141,7 @@ export default function RootLayout({
             <span className="font-semibold">{secondary[0].label}:</span>{" "}
             <a
               href={toTelHref(secondary[0].e164)}
-              aria-label={`Call Empire Solutions at ${secondary[0].human}`}
+              aria-label={`Call Empire Inspection Agency at ${secondary[0].human}`}
               className="underline underline-offset-4"
             >
               {secondary[0].human}
@@ -151,13 +151,13 @@ export default function RootLayout({
             <p className="mt-2">
               <a href="mailto:info@empireinspectionagency.com" className="underline">info@empireinspectionagency.com</a>
             </p>
-            <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Electrical Solutions</p>
+            <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Inspection Agency</p>
           </div>
         </footer>
         <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background p-2 md:hidden">
           <a
             href={toTelHref(primary.e164)}
-            aria-label={`Call Empire Solutions at ${primary.human}`}
+            aria-label={`Call Empire Inspection Agency at ${primary.human}`}
             className="block rounded-md bg-primary px-4 py-3 text-center font-semibold text-primary-foreground"
           >
             Call Now

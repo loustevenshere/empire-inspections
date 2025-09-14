@@ -76,7 +76,7 @@ export default function Page() {
       
       {/* Business Information */}
       <div className="mt-4 p-4 bg-muted/30 rounded-lg">
-        <h2 className="font-medium mb-2">Empire Electrical Solutions</h2>
+        <h2 className="font-medium mb-2">Empire Inspection Agency</h2>
         <p className="text-sm text-muted-foreground mb-1">6901 Germantown Avenue, Suite 200</p>
         <p className="text-sm text-muted-foreground mb-2">Philadelphia, PA 19119</p>
         <div className="space-y-1 text-sm">
@@ -85,7 +85,7 @@ export default function Page() {
             <span className="font-semibold">{primary.label}:</span>{" "}
             <a
               href={toTelHref(primary.e164)}
-              aria-label={`Call Empire Solutions at ${primary.human}`}
+              aria-label={`Call Empire Inspection Agency at ${primary.human}`}
               className="text-primary hover:underline underline-offset-4"
             >
               {primary.human}
@@ -95,7 +95,7 @@ export default function Page() {
             <span className="font-semibold">{secondary[0].label}:</span>{" "}
             <a
               href={toTelHref(secondary[0].e164)}
-              aria-label={`Call Empire Solutions at ${secondary[0].human}`}
+              aria-label={`Call Empire Inspection Agency at ${secondary[0].human}`}
               className="text-primary hover:underline underline-offset-4"
             >
               {secondary[0].human}
