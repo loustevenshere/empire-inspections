@@ -1,23 +1,13 @@
 // src/config/contact.ts
-export const phones = {
-  primary: {
-    label: "Primary",
-    e164: "+12158398997",
-    human: "215-839-8997",
-  },
-  secondary: {
-    label: "Alternate",
-    e164: "+18884199559",
-    human: "888-419-9559",
-  },
-} as const;
+export const BUSINESS_PHONE = process.env.NEXT_PUBLIC_BUSINESS_PHONE ?? "215-839-8997";
 
-export type PhoneKey = keyof typeof phones;
-
-export function getPrimaryPhone() {
-  return phones.primary;
+export function toTelHref(num: string) { 
+  return `tel:${num.replace(/[^0-9+]/g, "")}`; 
 }
 
-export function getSecondaryPhones() {
-  return [phones.secondary];
+export function formatPhone(num: string) {
+  const digits = num.replace(/\D/g, "");
+  if (digits.length === 11 && digits.startsWith("1")) return `(${digits.slice(1,4)}) ${digits.slice(4,7)}-${digits.slice(7)}`;
+  if (digits.length === 10) return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6)}`;
+  return num;
 }

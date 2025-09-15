@@ -2,8 +2,7 @@
 
 import React from "react";
 import { Check } from "lucide-react";
-import { getPrimaryPhone } from "@/config/contact";
-import { toTelHref } from "@/lib/phone";
+import { BUSINESS_PHONE, toTelHref, formatPhone } from "@/config/contact";
 
 // Payment identifiers (stored without $ or @)
 const CASH_TAG = "empiresolutions21";
@@ -256,7 +255,6 @@ function CopyPill({ value, ariaLabel, testId }: { value: string; ariaLabel: stri
 
 export default function PayPage() {
   const { handlePayment, isMobile } = usePaymentHandler();
-  const primary = getPrimaryPhone();
 
   return (
     <main className="min-h-screen py-8 px-4" data-testid="payments-page">
@@ -330,14 +328,14 @@ export default function PayPage() {
           {/* Square Card */}
           <div className="bg-gray-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
             <h3 className="text-xl font-semibold text-slate-900 mb-2">💳 Square</h3>
-            <p className="font-mono mb-2">{primary.human}</p>
+            <p className="font-mono mb-2">{formatPhone(BUSINESS_PHONE)}</p>
             <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
             
             <div className="space-y-2">
               <a
-                href={toTelHref(primary.e164)}
+                href={toTelHref(BUSINESS_PHONE)}
                 className="block w-full bg-gray-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-700 transition-colors text-center"
-                aria-label={`Call the office at ${primary.human}`}
+                aria-label={`Call the office at ${formatPhone(BUSINESS_PHONE)}`}
               >
                 Call the Office
               </a>

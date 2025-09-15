@@ -5,8 +5,7 @@ import Link from "next/link";
 import { trackPageview } from "@/lib/analytics";
 import Script from "next/script";
 import Image from "next/image";
-import { getPrimaryPhone, getSecondaryPhones, phones } from "@/config/contact";
-import { toTelHref } from "@/lib/phone";
+import { BUSINESS_PHONE, toTelHref } from "@/config/contact";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -60,8 +59,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const primary = getPrimaryPhone();
-  const secondary = getSecondaryPhones();
 
   return (
     <html lang="en">
@@ -78,18 +75,12 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@type": "Organization",
             "name": "Empire Inspection Agency",
-            "telephone": [phones.primary.e164, phones.secondary.e164],
+            "telephone": `+1${BUSINESS_PHONE.replace(/\D/g, "")}`,
             "contactPoint": [
               {
                 "@type": "ContactPoint",
                 "contactType": "customer support",
-                "telephone": phones.primary.e164,
-                "areaServed": "US"
-              },
-              {
-                "@type": "ContactPoint",
-                "contactType": "customer support",
-                "telephone": phones.secondary.e164,
+                "telephone": `+1${BUSINESS_PHONE.replace(/\D/g, "")}`,
                 "areaServed": "US"
               }
             ]
@@ -128,23 +119,12 @@ export default function RootLayout({
             <p>6901 Germantown Avenue, Suite 200, Philadelphia, PA 19119</p>
         <div className="space-y-1 text-sm">
           <div>
-            <span className="font-semibold">{primary.label}:</span>{" "}
             <a
-              href={toTelHref(primary.e164)}
-              aria-label={`Call Empire Inspection Agency at ${primary.human}`}
-              className="underline underline-offset-4"
+              href={toTelHref(BUSINESS_PHONE)}
+              aria-label={`Call Empire Inspection Agency at ${BUSINESS_PHONE}`}
+              className="underline underline-offset-4 font-semibold"
             >
-              {primary.human}
-            </a>
-          </div>
-          <div>
-            <span className="font-semibold">{secondary[0].label}:</span>{" "}
-            <a
-              href={toTelHref(secondary[0].e164)}
-              aria-label={`Call Empire Inspection Agency at ${secondary[0].human}`}
-              className="underline underline-offset-4"
-            >
-              {secondary[0].human}
+              {BUSINESS_PHONE}
             </a>
           </div>
         </div>
@@ -156,8 +136,8 @@ export default function RootLayout({
         </footer>
         <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background p-2 md:hidden">
           <a
-            href={toTelHref(primary.e164)}
-            aria-label={`Call Empire Inspection Agency at ${primary.human}`}
+            href={toTelHref(BUSINESS_PHONE)}
+            aria-label={`Call Empire Inspection Agency at ${BUSINESS_PHONE}`}
             className="block rounded-md bg-primary px-4 py-3 text-center font-semibold text-primary-foreground"
           >
             Call Now

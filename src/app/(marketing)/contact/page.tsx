@@ -3,8 +3,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ContactForm, contactSchema, inspectionTypeEnum, combineDateTime, getTodayString } from "@/lib/validation";
-import { getPrimaryPhone, getSecondaryPhones } from "@/config/contact";
-import { toTelHref } from "@/lib/phone";
+import { BUSINESS_PHONE, toTelHref, formatPhone } from "@/config/contact";
 
 
 // Custom hook to handle hydration safely
@@ -22,8 +21,6 @@ export default function Page() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const isHydrated = useHydrationSafe();
-  const primary = getPrimaryPhone();
-  const secondary = getSecondaryPhones();
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ContactForm>({
     resolver: zodResolver(contactSchema),
   });
@@ -61,7 +58,7 @@ export default function Page() {
         } else if (resp.status === 429) {
           setSubmitError("Too many requests. Please wait a moment and try again.");
         } else {
-          setSubmitError(result.error || `Something went wrong. Please try again or call us at ${primary.human}.`);
+          setSubmitError(result.error || `Something went wrong. Please try again or call us at ${formatPhone(BUSINESS_PHONE)}.`);
         }
       }
     } catch (error) {
@@ -80,25 +77,14 @@ export default function Page() {
         <p className="text-sm text-muted-foreground mb-1">6901 Germantown Avenue, Suite 200</p>
         <p className="text-sm text-muted-foreground mb-2">Philadelphia, PA 19119</p>
         <div className="space-y-1 text-sm">
-          <p className="text-xs md:text-sm text-muted-foreground md:hidden">Tap a number to call</p>
+          <p className="text-xs md:text-sm text-muted-foreground md:hidden">Tap to call</p>
           <div>
-            <span className="font-semibold">{primary.label}:</span>{" "}
             <a
-              href={toTelHref(primary.e164)}
-              aria-label={`Call Empire Inspection Agency at ${primary.human}`}
-              className="text-primary hover:underline underline-offset-4"
+              href={toTelHref(BUSINESS_PHONE)}
+              aria-label={`Call Empire Inspection Agency at ${formatPhone(BUSINESS_PHONE)}`}
+              className="text-primary hover:underline underline-offset-4 font-semibold"
             >
-              {primary.human}
-            </a>
-          </div>
-          <div>
-            <span className="font-semibold">{secondary[0].label}:</span>{" "}
-            <a
-              href={toTelHref(secondary[0].e164)}
-              aria-label={`Call Empire Inspection Agency at ${secondary[0].human}`}
-              className="text-primary hover:underline underline-offset-4"
-            >
-              {secondary[0].human}
+              {formatPhone(BUSINESS_PHONE)}
             </a>
           </div>
         </div>
