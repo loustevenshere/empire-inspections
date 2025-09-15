@@ -6,6 +6,7 @@ import { trackPageview } from "@/lib/analytics";
 import Script from "next/script";
 import Image from "next/image";
 import { BUSINESS_PHONE, toTelHref } from "@/config/contact";
+import MobileNavigation from "@/components/MobileNavigation";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -107,9 +108,7 @@ export default function RootLayout({
               <Link href="/pay">Pay</Link>
               <Link href="/contact">Contact</Link>
             </nav>
-            <nav className="flex md:hidden justify-end pt-2">
-              <Link href="/pay" aria-label="Pay">Pay</Link>
-            </nav>
+            <MobileNavigation />
           </div>
         </header>
         <main className="min-h-[80svh]">{children}</main>
