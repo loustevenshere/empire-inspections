@@ -9,8 +9,12 @@ export default function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const menuRef = useRef<HTMLDivElement>(null);
+  // IMPORTANT: Keep ref types specific to DOM element.
+  // `Link` from Next forwards to an `<a>` element, so anchor refs must be
+  // `HTMLAnchorElement`. Buttons must use `HTMLButtonElement` refs.
   const firstFocusableRef = useRef<HTMLButtonElement>(null);
-  const lastFocusableRef = useRef<HTMLButtonElement>(null);
+  const lastFocusableLinkRef = React.useRef<HTMLAnchorElement>(null);
+  const lastFocusableButtonRef = React.useRef<HTMLButtonElement>(null);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -60,11 +64,15 @@ export default function MobileNavigation() {
         // Shift + Tab
         if (document.activeElement === firstFocusableRef.current) {
           event.preventDefault();
-          lastFocusableRef.current?.focus();
+          // Prefer anchor ref, fall back to button ref
+          (lastFocusableLinkRef.current ?? lastFocusableButtonRef.current)?.focus();
         }
       } else {
         // Tab
-        if (document.activeElement === lastFocusableRef.current) {
+        if (
+          document.activeElement === lastFocusableLinkRef.current ||
+          document.activeElement === lastFocusableButtonRef.current
+        ) {
           event.preventDefault();
           firstFocusableRef.current?.focus();
         }
@@ -135,14 +143,14 @@ export default function MobileNavigation() {
                 <ul className="space-y-2">
                   {navLinks.map((link, index) => (
                     <li key={link.href}>
-                      <Link
-                        href={link.href}
-                        onClick={closeMenu}
-                        className="block py-4 px-4 text-lg font-medium rounded-lg hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px] flex items-center"
-                        ref={index === navLinks.length - 1 ? lastFocusableRef : undefined}
-                      >
-                        {link.label}
-                      </Link>
+                        <Link
+                          href={link.href}
+                          onClick={closeMenu}
+                          className="block py-4 px-4 text-lg font-medium rounded-lg hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 min-h-[44px] flex items-center"
+                          ref={index === navLinks.length - 1 ? lastFocusableLinkRef : undefined}
+                        >
+                          {link.label}
+                        </Link>
                     </li>
                   ))}
                 </ul>
