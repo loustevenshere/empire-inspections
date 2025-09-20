@@ -12,7 +12,7 @@ function getIp(req: NextRequest) {
   return "local";
 }
 
-const CONTACT_API_URL = process.env.CONTACT_API_URL!; // e.g., https://<apiId>.execute-api.us-east-1.amazonaws.com/prod/contact
+const CONTACT_API_URL = process.env.CONTACT_API_URL; // e.g., https://<apiId>.execute-api.us-east-1.amazonaws.com/prod/contact
 const CONTACT_SHARED_SECRET = process.env.CONTACT_SHARED_SECRET; // optional
 
 function signBody(body: string): string | undefined {
