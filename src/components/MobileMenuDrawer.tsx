@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { X } from "lucide-react";
@@ -13,23 +13,21 @@ interface MobileMenuDrawerProps {
 export default function MobileMenuDrawer({ menuOpen, setMenuOpen }: MobileMenuDrawerProps) {
   const pathname = usePathname();
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const firstLinkRef = useRef<HTMLAnchorElement>(null);
   const lastLinkRef = useRef<HTMLAnchorElement>(null);
-  const hamburgerButtonRef = useRef<HTMLButtonElement>(null);
 
-  const closeMenu = () => {
+  const closeMenu = useCallback(() => {
     setMenuOpen(false);
     // Return focus to hamburger button
     setTimeout(() => {
       const hamburgerButton = document.querySelector('[aria-label*="navigation menu"]') as HTMLButtonElement;
       hamburgerButton?.focus();
     }, 100);
-  };
+  }, [setMenuOpen]);
 
   // Close menu on route change
   useEffect(() => {
     closeMenu();
-  }, [pathname]);
+  }, [pathname, closeMenu]);
 
   // Handle ESC key and body scroll
   useEffect(() => {
@@ -55,7 +53,7 @@ export default function MobileMenuDrawer({ menuOpen, setMenuOpen }: MobileMenuDr
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = "unset";
     };
-  }, [menuOpen]);
+  }, [menuOpen, closeMenu]);
 
   // Focus management for keyboard navigation
   const handleKeyDown = (event: React.KeyboardEvent) => {

@@ -57,9 +57,7 @@ export async function POST(req: NextRequest) {
       jobAddress: data.jobAddress,
       municipality: data.municipality,
       inspectionType: data.inspectionType,
-      preferredDate: data.preferredDate ?? null,
-      preferredTime: data.preferredTime ?? null,
-      preferredDateTime: data.preferredDateTime ?? null,
+      requestedDate: data.requestedDate ?? null,
       notes: data.notes ?? null,
     };
     const body = JSON.stringify(forward);

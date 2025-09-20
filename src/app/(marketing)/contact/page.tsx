@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactForm, contactSchema, inspectionTypeEnum, combineDateTime, getTodayString } from "@/lib/validation";
+import { ContactForm, contactSchema, inspectionTypeEnum, getTodayString } from "@/lib/validation";
 import { BUSINESS_PHONE, toTelHref, formatPhone } from "@/config/contact";
 
 
@@ -29,20 +29,10 @@ export default function Page() {
     try {
       setSubmitError(null);
       
-      // Combine date and time into ISO string
-      const preferredDateTime = data.preferredDate && data.preferredTime 
-        ? combineDateTime(data.preferredDate, data.preferredTime)
-        : undefined;
-
-      const payload = {
-        ...data,
-        preferredDateTime,
-      };
-
       const resp = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify(data),
       });
 
       const result = await resp.json();
@@ -169,37 +159,20 @@ export default function Page() {
             </div>
           </div>
           <div>
-            <label className="block text-sm font-medium">Preferred Time</label>
-            <div className="mt-1 grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <div>
-                <label htmlFor="preferredDate" className="sr-only">Preferred Date</label>
-                <input 
-                  id="preferredDate"
-                  type="date" 
-                  className="w-full rounded-md border px-3 py-2" 
-                  min={getTodayString()}
-                  aria-invalid={errors.preferredDate ? "true" : "false"}
-                  {...register("preferredDate")} 
-                  data-testid="preferredDate"
-                  suppressHydrationWarning
-                />
-                {errors.preferredDate && <p className="text-sm text-red-600">{errors.preferredDate.message}</p>}
-              </div>
-              <div>
-                <label htmlFor="preferredTime" className="sr-only">Preferred Time</label>
-                <input 
-                  id="preferredTime"
-                  type="time" 
-                  step="900"
-                  className="w-full rounded-md border px-3 py-2" 
-                  aria-invalid={errors.preferredTime ? "true" : "false"}
-                  {...register("preferredTime")} 
-                  data-testid="preferredTime"
-                  suppressHydrationWarning
-                />
-                {errors.preferredTime && <p className="text-sm text-red-600">{errors.preferredTime.message}</p>}
-                <p className="text-xs text-muted-foreground mt-1">Times are scheduled in your local timezone.</p>
-              </div>
+            <label className="block text-sm font-medium">Requested Service Date</label>
+            <div className="mt-1">
+              <label htmlFor="requestedDate" className="sr-only">Requested Service Date</label>
+              <input 
+                id="requestedDate"
+                type="date" 
+                className="w-full rounded-md border px-3 py-2" 
+                min={getTodayString()}
+                aria-invalid={errors.requestedDate ? "true" : "false"}
+                {...register("requestedDate")} 
+                data-testid="requestedDate"
+                suppressHydrationWarning
+              />
+              {errors.requestedDate && <p className="text-sm text-red-600">{errors.requestedDate.message}</p>}
             </div>
           </div>
           <div>
