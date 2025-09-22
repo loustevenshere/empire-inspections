@@ -35,7 +35,7 @@ export default function Page() {
         
         <div className="relative order-first lg:order-last">
           <Image
-            src="/philly.jpg"
+            src="/website-images/philly.jpg"
             alt="Philadelphia skyline"
             width={600}
             height={400}

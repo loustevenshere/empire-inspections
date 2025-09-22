@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     "Independent electrical inspections for contractors and builders in Philadelphia. Fast scheduling, clear reports, and NEC-compliant guidance.",
   metadataBase: new URL("https://example.com"), // replace after deploying
   icons: {
-    icon: "/empireinspectionlogo.png",
-    apple: "/empireinspectionlogo.png",
+    icon: "/website-images/empireinspectionlogo.png",
+    apple: "/website-images/empireinspectionlogo.png",
   },
   openGraph: {
     title: "Empire Inspection Agency",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/empireinspectionlogo.png",
+        url: "/website-images/empireinspectionlogo.png",
         width: 1200,
         height: 630,
         alt: "Empire Inspection Agency Logo",
@@ -45,10 +45,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/empireinspectionlogo.png"],
+    images: ["/website-images/empireinspectionlogo.png"],
   },
   other: {
-    "msapplication-TileImage": "/empireinspectionlogo.png",
+    "msapplication-TileImage": "/website-images/empireinspectionlogo.png",
     "msapplication-TileColor": "#ffffff",
   },
   robots: { index: true, follow: true },
@@ -93,7 +93,7 @@ export default function RootLayout({
           <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
             <Link href="/" className="flex items-center gap-3">
               <Image 
-                src="/logo-empire.jpeg" 
+                src="/website-images/logo-empire.jpeg" 
                 alt="Empire Electrical Solutions" 
                 width={140} 
                 height={48} 

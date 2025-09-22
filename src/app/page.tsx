@@ -10,7 +10,7 @@ export default function Home() {
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <Image
-          src="/lightbulb.jpg"
+          src="/website-images/lightbulb.jpg"
           alt="Electrical inspection background"
           fill
           className="object-cover"
