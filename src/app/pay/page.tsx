@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Check } from "lucide-react";
 import { BUSINESS_PHONE, toTelHref, formatPhone } from "@/config/contact";
 
@@ -258,90 +259,163 @@ export default function PayPage() {
 
   return (
     <main className="min-h-screen py-8 px-4" data-testid="payments-page">
-      <div className="max-w-6xl mx-auto">
+      <div className="container mx-auto max-w-3xl px-4 py-8">
         {/* Page Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-slate-900 mb-4">
-            Pay Empire Inspection Agency
+            Pay
           </h1>
           <p className="text-lg text-slate-600">
-            Choose your preferred payment method below.
+            Choose the option that works best for you.
           </p>
         </div>
 
-        {/* Payment Method Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Venmo Card */}
-          <div className="bg-blue-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">💸 Venmo</h3>
-            <div className="mb-2">
-              <CopyPill value={`@${VENMO_USERNAME}`} ariaLabel="Copy Venmo username" testId="copy-venmo" />
-              <span data-testid="venmo-handle" className="sr-only">@{VENMO_USERNAME}</span>
+        {/* Section A - Quick Pay Apps */}
+        <section className="mt-6">
+          <h2 className="text-2xl font-semibold text-slate-900 mb-6">Quick Pay Apps</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Venmo Card */}
+            <div className="bg-blue-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">💸 Venmo</h3>
+              <div className="mb-2">
+                <CopyPill value={`@${VENMO_USERNAME}`} ariaLabel="Copy Venmo username" testId="copy-venmo" />
+                <span data-testid="venmo-handle" className="sr-only">@{VENMO_USERNAME}</span>
+              </div>
+              <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
+              
+              <div className="space-y-2">
+                <button
+                  onClick={() => handlePayment('venmo')}
+                  disabled={isMobile === null}
+                  className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Open Venmo"
+                  data-testid="open-venmo"
+                >
+                  {isMobile === null ? 'Loading...' : 'Open Venmo'}
+                </button>
+              </div>
             </div>
-            <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
-            
-            <div className="space-y-2">
-              <button
-                onClick={() => handlePayment('venmo')}
-                disabled={isMobile === null}
-                className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                aria-label="Open Venmo"
-                data-testid="open-venmo"
-              >
-                {isMobile === null ? 'Loading...' : 'Open Venmo'}
-              </button>
+
+            {/* Cash App Card */}
+            <div className="bg-green-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
+              <h3 className="text-xl font-semibold text-slate-900 mb-2">💵 Cash App</h3>
+              <div className="mb-2">
+                <CopyPill value={`$${CASH_TAG}`} ariaLabel="Copy Cash App tag" testId="copy-cash" />
+                <span data-testid="cash-handle" className="sr-only">${CASH_TAG}</span>
+              </div>
+              <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
+              
+              <div className="space-y-2">
+                <button
+                  onClick={() => handlePayment('cashapp')}
+                  disabled={isMobile === null}
+                  className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  aria-label="Open Cash App"
+                  data-testid="open-cashapp"
+                >
+                  {isMobile === null ? 'Loading...' : 'Open Cash App'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Section B - Cards & Zelle */}
+        <section className="mt-8" aria-labelledby="cards-zelle-heading">
+          <h2 id="cards-zelle-heading" className="text-2xl font-semibold text-slate-900 mb-6">More Ways To Pay</h2>
+          
+          {/* Payment Badges Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 place-items-center">
+            {/* Visa */}
+            <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
+              <Image
+                src="/payment-badges/visa.png"
+                alt="Visa"
+                width={200}
+                height={120}
+                sizes="(max-width: 768px) 33vw, 200px"
+                priority={false}
+                loading="lazy"
+                decoding="async"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            {/* Mastercard */}
+            <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
+              <Image
+                src="/payment-badges/mastercard.png"
+                alt="Mastercard"
+                width={200}
+                height={120}
+                sizes="(max-width: 768px) 33vw, 200px"
+                priority={false}
+                loading="lazy"
+                decoding="async"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            {/* American Express */}
+            <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
+              <Image
+                src="/payment-badges/amex.png"
+                alt="American Express"
+                width={200}
+                height={120}
+                sizes="(max-width: 768px) 33vw, 200px"
+                priority={false}
+                loading="lazy"
+                decoding="async"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            {/* Discover */}
+            <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
+              <Image
+                src="/payment-badges/discover.png"
+                alt="Discover"
+                width={200}
+                height={120}
+                sizes="(max-width: 768px) 33vw, 200px"
+                priority={false}
+                loading="lazy"
+                decoding="async"
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+
+            {/* Zelle */}
+            <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
+              <Image
+                src="/payment-badges/zelle.png"
+                alt="Zelle"
+                width={200}
+                height={120}
+                sizes="(max-width: 768px) 33vw, 200px"
+                priority={false}
+                loading="lazy"
+                decoding="async"
+                className="max-w-full max-h-full object-contain"
+              />
             </div>
           </div>
 
-          {/* Cash App Card */}
-          <div className="bg-green-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">💵 Cash App</h3>
-            <div className="mb-2">
-              <CopyPill value={`$${CASH_TAG}`} ariaLabel="Copy Cash App tag" testId="copy-cash" />
-              <span data-testid="cash-handle" className="sr-only">${CASH_TAG}</span>
-            </div>
-            <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
-            
-            <div className="space-y-2">
-              <button
-                onClick={() => handlePayment('cashapp')}
-                disabled={isMobile === null}
-                className="w-full bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                aria-label="Open Cash App"
-                data-testid="open-cashapp"
-              >
-                {isMobile === null ? 'Loading...' : 'Open Cash App'}
-              </button>
-            </div>
+          {/* Call-to-Pay Line */}
+          <div className="mt-4 text-sm text-gray-600 text-center">
+            Prefer to pay by card or Zelle?{" "}
+            <a
+              href={toTelHref(BUSINESS_PHONE)}
+              className="underline underline-offset-2 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+              aria-label="Call our office"
+              role="link"
+            >
+              Call our office
+            </a>
+            .
           </div>
-
-          {/* Zelle Card */}
-          <div className="bg-purple-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">🏦 Zelle</h3>
-            <div className="mb-2">
-              <CopyPill value={ZELLE_PHONE} ariaLabel="Copy Zelle phone number" testId="copy-zelle" />
-              <span data-testid="zelle-handle" className="sr-only">{ZELLE_PHONE}</span>
-            </div>
-            <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
-          </div>
-
-          {/* Square Card */}
-          <div className="bg-gray-100 rounded-xl shadow-sm border p-6 hover:shadow-md transition-shadow">
-            <h3 className="text-xl font-semibold text-slate-900 mb-2">💳 Square</h3>
-            <p className="font-mono mb-2">{formatPhone(BUSINESS_PHONE)}</p>
-            <p className="text-sm text-slate-600 mb-4">Include address or permit # when making payments.</p>
-            
-            <div className="space-y-2">
-              <a
-                href={toTelHref(BUSINESS_PHONE)}
-                className="block w-full bg-gray-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-700 transition-colors text-center"
-                aria-label={`Call the office at ${formatPhone(BUSINESS_PHONE)}`}
-              >
-                Call the Office
-              </a>
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
     </main>
   );
