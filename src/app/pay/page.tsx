@@ -3,12 +3,11 @@
 import React from "react";
 import Image from "next/image";
 import { Check } from "lucide-react";
-import { BUSINESS_PHONE, toTelHref, formatPhone } from "@/config/contact";
+import { BUSINESS_PHONE, toTelHref } from "@/config/contact";
 
 // Payment identifiers (stored without $ or @)
 const CASH_TAG = "empiresolutions21";
 const VENMO_USERNAME = "empiresolutions-21";
-const ZELLE_PHONE = "267-979-9613";
 // Office phone will be imported from config
 
 // Enhanced environment detection hook (client-only to prevent SSR mismatches)
