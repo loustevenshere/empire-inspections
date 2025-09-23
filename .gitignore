@@ -41,6 +41,4 @@ next-env.d.ts
 # AWS local credentials/config
 AWS/
 
-# scripts folder
-scripts/
 

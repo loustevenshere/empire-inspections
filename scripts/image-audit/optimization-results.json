@@ -1,0 +1,79 @@
+[
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 6
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 3
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 3
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 1
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 1
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 1
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 1
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 1
+  },
+  {
+    "optimized": true,
+    "newPath": "website-images/empireinspectionlogo.webp",
+    "originalPath": "website-images/empireinspectionlogo.png",
+    "size": 16,
+    "format": "webp",
+    "originalSize": 622
+  },
+  {
+    "optimized": true,
+    "newPath": "website-images/iStock-electric-inspection.webp",
+    "originalPath": "website-images/iStock-electric-inspection.jpg",
+    "size": 186,
+    "format": "webp",
+    "originalSize": 616
+  },
+  {
+    "optimized": true,
+    "newPath": "website-images/lightbulb.webp",
+    "originalPath": "website-images/lightbulb.jpg",
+    "size": 22,
+    "format": "webp",
+    "originalSize": 63
+  },
+  {
+    "optimized": false,
+    "reason": "already_optimized",
+    "originalSize": 187
+  },
+  {
+    "optimized": true,
+    "newPath": "website-images/philly.webp",
+    "originalPath": "website-images/philly.jpg",
+    "size": 253,
+    "format": "webp",
+    "originalSize": 275
+  }
+]

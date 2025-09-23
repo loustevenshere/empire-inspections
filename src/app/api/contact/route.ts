@@ -48,7 +48,6 @@ export async function POST(req: NextRequest) {
 
     // If we dont have this we should fail!!
     if (!CONTACT_API_URL) {
-      console.log("[DEV CONTACT] would forward:", { ip, data });
       return NextResponse.json({ ok: true, dev: true });
     }
 
@@ -86,7 +85,6 @@ export async function POST(req: NextRequest) {
     const out = await upstream.json().catch(() => ({ ok: true }));
     
     // Log the successful response
-    console.log("[LAMBDA SUCCESS] Response body:", JSON.stringify(out, null, 2));
     
     return NextResponse.json(out, { status: 200 });
   } catch (err) {
