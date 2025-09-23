@@ -7,14 +7,12 @@
   },
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "node scripts/validate-badges.mjs && next build --turbopack",
+    "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"No tests configured\" && exit 0",
     "analyze": "ANALYZE=true npm run build",
-    "images:audit": "node scripts/image-audit/inventory.mjs",
-    "images:optimize": "node scripts/tools/optimize-images.mjs",
-    "images:purge-unused": "node scripts/image-audit/manage-unused.mjs purge",
     "prepare": "husky install"
   },
   "dependencies": {

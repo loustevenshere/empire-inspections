@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import bundleAnalyzer from '@next/bundle-analyzer';
 
 const nextConfig: NextConfig = {
   // Production optimizations
@@ -20,12 +21,14 @@ const nextConfig: NextConfig = {
   
   // Bundle analyzer (only when ANALYZE=true)
   ...(process.env.ANALYZE === 'true' && {
-    webpack: (config: any) => {
-      config.plugins.push(
-        new (require('@next/bundle-analyzer'))({
-          enabled: true,
-        })
-      );
+    webpack: (config: NextConfig['webpack']) => {
+      if (config && 'plugins' in config && Array.isArray(config.plugins)) {
+        config.plugins.push(
+          bundleAnalyzer({
+            enabled: true,
+          })
+        );
+      }
       return config;
     },
   }),
