@@ -24,8 +24,8 @@ export const metadata: Metadata = {
     "Independent electrical inspections for contractors and builders in Philadelphia. Fast scheduling, clear reports, and NEC-compliant guidance.",
   metadataBase: new URL("https://example.com"), // replace after deploying
   icons: {
-    icon: "/website-images/empireinspectionlogo.png",
-    apple: "/website-images/empireinspectionlogo.png",
+    icon: "/website-images/empireinspectionlogo.webp",
+    apple: "/website-images/empireinspectionlogo.webp",
   },
   openGraph: {
     title: "Empire Inspection Agency",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/website-images/empireinspectionlogo.png",
+        url: "/website-images/empireinspectionlogo.webp",
         width: 1200,
         height: 630,
         alt: "Empire Inspection Agency Logo",
@@ -45,10 +45,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["/website-images/empireinspectionlogo.png"],
+    images: ["/website-images/empireinspectionlogo.webp"],
   },
   other: {
-    "msapplication-TileImage": "/website-images/empireinspectionlogo.png",
+    "msapplication-TileImage": "/website-images/empireinspectionlogo.webp",
     "msapplication-TileColor": "#ffffff",
   },
   robots: { index: true, follow: true },

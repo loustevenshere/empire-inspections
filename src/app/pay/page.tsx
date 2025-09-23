@@ -328,7 +328,7 @@ export default function PayPage() {
             {/* Visa */}
             <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
               <Image
-                src="/payment-badges/visa.png"
+                src="/payment-badges/visa.v1.webp"
                 alt="Visa"
                 width={200}
                 height={120}
@@ -343,7 +343,7 @@ export default function PayPage() {
             {/* Mastercard */}
             <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
               <Image
-                src="/payment-badges/mastercard.png"
+                src="/payment-badges/mastercard.v1.webp"
                 alt="Mastercard"
                 width={200}
                 height={120}
@@ -358,7 +358,7 @@ export default function PayPage() {
             {/* American Express */}
             <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
               <Image
-                src="/payment-badges/amex.png"
+                src="/payment-badges/amex.v1.webp"
                 alt="American Express"
                 width={200}
                 height={120}
@@ -373,7 +373,7 @@ export default function PayPage() {
             {/* Discover */}
             <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
               <Image
-                src="/payment-badges/discover.png"
+                src="/payment-badges/discover.v1.webp"
                 alt="Discover"
                 width={200}
                 height={120}
@@ -388,7 +388,7 @@ export default function PayPage() {
             {/* Zelle */}
             <div className="rounded-2xl shadow-sm ring-1 ring-gray-200 p-3 bg-white w-full max-w-[200px] h-[120px] flex items-center justify-center">
               <Image
-                src="/payment-badges/zelle.png"
+                src="/payment-badges/zelle.v1.webp"
                 alt="Zelle"
                 width={200}
                 height={120}

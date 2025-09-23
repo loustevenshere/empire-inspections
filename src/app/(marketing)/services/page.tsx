@@ -27,7 +27,7 @@ export default function Page() {
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Background Image */}
         <Image
-          src="/website-images/iStock-electric-inspection.jpg"
+          src="/website-images/iStock-electric-inspection.webp"
           alt="Professional electrical inspection"
           fill
           className="object-cover"

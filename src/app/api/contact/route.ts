@@ -4,6 +4,7 @@ import { allow } from "@/lib/rateLimit";
 import { BUSINESS_PHONE, formatPhone } from "@/config/contact";
 import crypto from "crypto";
 
+// Whats this doing?
 function getIp(req: NextRequest) {
   const xff = req.headers.get("x-forwarded-for");
   if (xff) return xff.split(",")[0]!.trim();
@@ -12,9 +13,11 @@ function getIp(req: NextRequest) {
   return "local";
 }
 
-const CONTACT_API_URL = "https://9gwd0q2okf.execute-api.us-east-1.amazonaws.com/prod/contact"; // e.g., https://<apiId>.execute-api.us-east-1.amazonaws.com/prod/contact  
+// Delete?
+const CONTACT_API_URL = process.env.CONTACT_API_URL; // e.g., https://<apiId>.execute-api.us-east-1.amazonaws.com/prod/contact  
 const CONTACT_SHARED_SECRET = process.env.CONTACT_SHARED_SECRET; // optional
 
+// Delete?
 function signBody(body: string): string | undefined {
   if (!CONTACT_SHARED_SECRET) return undefined;
   return crypto.createHmac("sha256", CONTACT_SHARED_SECRET).update(body).digest("hex");
@@ -27,22 +30,23 @@ export async function POST(req: NextRequest) {
 
     if (!parsed.success) {
       return NextResponse.json(
-        { ok: false, error: "Validation failed", details: parsed.error.flatten() },
+        { ok: false, error: "Validation failed", details: parsed.error.issues },
         { status: 400 }
       );
     }
 
     const data = parsed.data;
 
-    // Honeypot
+    // Honeypot - what does this check?
     if ('_hp' in data && data._hp) return NextResponse.json({ ok: true });
 
-    // Rate limit
+    // Rate limit - what does this check?
     const ip = getIp(req);
     if (!allow(ip)) {
       return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
     }
 
+    // If we dont have this we should fail!!
     if (!CONTACT_API_URL) {
       console.log("[DEV CONTACT] would forward:", { ip, data });
       return NextResponse.json({ ok: true, dev: true });
@@ -63,14 +67,6 @@ export async function POST(req: NextRequest) {
     const body = JSON.stringify(forward);
     const sig = signBody(body);
 
-    // Log the request being sent to lambda
-    console.log("[LAMBDA REQUEST] URL:", CONTACT_API_URL);
-    console.log("[LAMBDA REQUEST] Headers:", {
-      "Content-Type": "application/json",
-      ...(sig ? { "x-empire-signature": sig } : {}),
-    });
-    console.log("[LAMBDA REQUEST] Body:", body);
-
     const upstream = await fetch(CONTACT_API_URL, {
       method: "POST",
       headers: {
@@ -80,11 +76,6 @@ export async function POST(req: NextRequest) {
       body,
       cache: "no-store",
     });
-
-    // Log response status and headers
-    console.log("[LAMBDA RESPONSE] Status:", upstream.status);
-    console.log("[LAMBDA RESPONSE] Status Text:", upstream.statusText);
-    console.log("[LAMBDA RESPONSE] Headers:", Object.fromEntries(upstream.headers.entries()));
 
     if (!upstream.ok) {
       const text = await upstream.text().catch(() => "");
