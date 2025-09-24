@@ -4,6 +4,9 @@ import { allow } from "@/lib/rateLimit";
 import { BUSINESS_PHONE, formatPhone } from "@/config/contact";
 import crypto from "crypto";
 
+export const runtime = 'nodejs';
+
+
 function getIp(req: NextRequest) {
   const xff = req.headers.get("x-forwarded-for");
   if (xff) return xff.split(",")[0]!.trim();
@@ -34,7 +37,7 @@ export async function POST(req: NextRequest) {
     }
 
     const data = parsed.data;
-    
+
     if (DEV_MODE) {
       console.log("[Contact Route] DEV_MODE request payload:", data);
       return NextResponse.json({ ok: true, dev: true });

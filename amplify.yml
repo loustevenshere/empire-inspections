@@ -8,6 +8,10 @@ frontend:
         - npm run lint
     build:
       commands:
+        # Write envs/secrets provided by Amplify into a file Next.js reads
+        - printf "CONTACT_API_URL=%s\n" "$CONTACT_API_URL" >> .env.production
+        - printf "ENVIRONMENT=%s\n" "$ENVIRONMENT" >> .env.production
+        - printf "CONTACT_SHARED_SECRET=%s\n" "$CONTACT_SHARED_SECRET" >> .env.production
         - npm run build
   artifacts:
     baseDirectory: .next
@@ -17,10 +21,3 @@ frontend:
     paths:
       - node_modules/**/*
       - .next/cache/**/*
-  environment:
-    variables:
-      # Add your environment variables here
-      # These will be available to Next.js SSR and API routes
-      CONTACT_API_URL: $CONTACT_API_URL
-      CONTACT_SHARED_SECRET: $CONTACT_SHARED_SECRET
-      ENVIRONMENT: $ENVIRONMENT
