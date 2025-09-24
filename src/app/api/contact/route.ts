@@ -14,7 +14,7 @@ function getIp(req: NextRequest) {
 
 const CONTACT_API_URL = process.env.CONTACT_API_URL; // e.g., https://<apiId>.execute-api.us-east-1.amazonaws.com/prod/contact  
 const CONTACT_SHARED_SECRET = process.env.CONTACT_SHARED_SECRET; // optional
-const DEV_MODE = process.env.DEV_MODE === "true";
+const DEV_MODE = process.env.ENVIRONMENT === "DEV";
 
 function signBody(body: string): string | undefined {
   if (!CONTACT_SHARED_SECRET) return undefined;
@@ -34,6 +34,11 @@ export async function POST(req: NextRequest) {
     }
 
     const data = parsed.data;
+    
+    if (DEV_MODE) {
+      console.log("[Contact Route] DEV_MODE request payload:", data);
+      return NextResponse.json({ ok: true, dev: true });
+    }
 
       console.log("[Contact Route] Env config:", {
       DEV_MODE,
@@ -41,10 +46,6 @@ export async function POST(req: NextRequest) {
       CONTACT_SHARED_SECRET_PRESENT: Boolean(CONTACT_SHARED_SECRET),
     });
 
-    if (DEV_MODE) {
-      console.log("[Contact Route] DEV_MODE request payload:", data);
-      return NextResponse.json({ ok: true, dev: true });
-    }
 
     if (!CONTACT_API_URL) {
       console.error("[Contact Route] Missing CONTACT_API_URL in non-dev mode.");

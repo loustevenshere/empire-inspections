@@ -17,3 +17,10 @@ frontend:
     paths:
       - node_modules/**/*
       - .next/cache/**/*
+  environment:
+    variables:
+      # Add your environment variables here
+      # These will be available to Next.js SSR and API routes
+      CONTACT_API_URL: $CONTACT_API_URL
+      CONTACT_SHARED_SECRET: $CONTACT_SHARED_SECRET
+      ENVIRONMENT: $ENVIRONMENT

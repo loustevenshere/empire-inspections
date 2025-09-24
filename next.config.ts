@@ -14,6 +14,13 @@ const nextConfig: NextConfig = {
   // Compression
   compress: true,
   
+  // Environment variables configuration
+  env: {
+    // Make environment variables available to the client-side
+    // Only add variables that are safe to expose to the browser
+    // Server-side variables are automatically available in API routes and SSR
+  },
+  
   // Experimental features for better performance
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-accordion', '@radix-ui/react-dialog'],
