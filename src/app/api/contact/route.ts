@@ -15,8 +15,8 @@ function getIp(req: NextRequest) {
   return "local";
 }
 
-const CONTACT_API_URL = process.env.CONTACT_API_URL; // e.g., https://<apiId>.execute-api.us-east-1.amazonaws.com/prod/contact  
-const CONTACT_SHARED_SECRET = process.env.CONTACT_SHARED_SECRET; // optional
+const CONTACT_API_URL = process.env.CONTACT_API_URL;
+const CONTACT_SHARED_SECRET = process.env.CONTACT_SHARED_SECRET; 
 const DEV_MODE = process.env.ENVIRONMENT === "DEV";
 
 function signBody(body: string): string | undefined {
@@ -43,11 +43,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true, dev: true });
     }
 
-      console.log("[Contact Route] Env config:", {
-      DEV_MODE,
-      CONTACT_API_URL: CONTACT_API_URL ?? "undefined",
-      CONTACT_SHARED_SECRET_PRESENT: Boolean(CONTACT_SHARED_SECRET),
-    });
+    if (!CONTACT_SHARED_SECRET) {
+      console.error("[Contact Route] Missing CONTACT_SHARED_SECRET in non-dev mode.");
+      return NextResponse.json(
+        { ok: false, error: "Contact service misconfigured. Please try again." },
+        { status: 500 }
+      );
+    }
 
 
     if (!CONTACT_API_URL) {
