@@ -1,6 +1,23 @@
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import crypto from "crypto";
 
+// --- Date Formatting Helper ---
+function formatDateSafe(dateString) {
+  try {
+    if (!dateString) return "-";
+    const d = new Date(dateString);
+    if (isNaN(d.getTime())) return String(dateString); // fallback to raw string
+    return d.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  } catch {
+    return dateString || "-";
+  }
+}
+
 // --- Logging Utility ---
 const LOG_SAMPLE = parseFloat(process.env.LOG_SAMPLE || "1.0");
 
@@ -198,14 +215,14 @@ export const handler = async (event) => {
       };
     }
     // Note: requestedDate is optional - if not provided, we'll use a placeholder
-    const displayDate = requestedDate || "Not specified";
+    const prettyDate = formatDateSafe(requestedDate);
 
     // Soft email validation for reply-to & confirmation only
     const hasValidEmail =
       typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const canConfirm = !!FROM_USER && hasValidEmail;
 
-    const subject = `New Inspection — ${displayDate} — ${name}${
+    const subject = `New Inspection — ${prettyDate} — ${name}${
       inspectionType ? " — " + inspectionType : ""
     }`;
 
@@ -217,11 +234,8 @@ export const handler = async (event) => {
       <p><b>Email:</b> ${escapeHtml(email)}</p>
       <p><b>Phone:</b> ${escapeHtml(phone)}</p>
       <p><b>Job Address:</b> ${escapeHtml(jobAddress)}</p>
-      <p><b>Address Components:</b> ${escapeHtml(
-        `${street1}${street2 ? ", " + street2 : ""}, ${city}, ${state} ${zip}`
-      )}</p>
       <p><b>Inspection Type:</b> ${escapeHtml(inspectionType)}</p>
-      <p><b>Requested Service Date:</b> ${escapeHtml(displayDate)}</p>
+      <p><b>Requested Service Date:</b> ${escapeHtml(prettyDate)}</p>
       ${message ? `<p><b>Message:</b> ${escapeHtml(message)}</p>` : ""}
     `;
     const text = `New Inspection Request
@@ -231,11 +245,8 @@ ${company ? `Company: ${company}` : ""}
 Email: ${email}
 Phone: ${phone}
 Job Address: ${jobAddress}
-Address Components: ${street1}${
-      street2 ? ", " + street2 : ""
-    }, ${city}, ${state} ${zip}
 Inspection Type: ${inspectionType}
-Requested Service Date: ${displayDate}
+Requested Service Date: ${prettyDate}
 ${message ? `Message: ${message}` : ""}`.trim();
 
     const officeCmd = new SendEmailCommand({
@@ -253,7 +264,7 @@ ${message ? `Message: ${message}` : ""}`.trim();
       EmailTags: [
         { Name: "app", Value: "empire-inspection" },
         { Name: "type", Value: "internal" },
-        { Name: "requestedDate", Value: displayDate },
+        { Name: "requestedDate", Value: requestedDate },
       ],
     });
 
@@ -261,13 +272,13 @@ ${message ? `Message: ${message}` : ""}`.trim();
 
     // --- User confirmation email (non-blocking, only if FROM_USER+valid email) ---
     if (canConfirm) {
-      const confirmSubject = `We've received your inspection request for ${displayDate}`;
+      const confirmSubject = `We've received your inspection request for ${prettyDate}`;
       const confirmText = `
 Hi ${name},
 
 Thank you for contacting Empire Inspection Agency. We are committed to connecting you with our expert, inspection professionals. Our goal is to quickly execute your inspection needs and are available to work closely with your municipalities to ensure contractor/customer satisfaction. A team member will contact you with your provided contact information during our regular business hours, which are 7:30AM - 4:00 PM (Monday-Friday) excluding holidays.
 
-Requested Service Date: ${displayDate}
+Requested Service Date: ${prettyDate}
 
 If you need immediate assistance, please call (215) 839-8997.
 
@@ -282,7 +293,7 @@ Best regards, Team Empire
           
           <div style="background-color: #f8f9fa; padding: 16px; border-left: 4px solid #007bff; margin: 20px 0;">
             <p style="margin: 0;"><strong>Requested Service Date:</strong> ${escapeHtml(
-              displayDate
+              prettyDate
             )}</p>
           </div>
           
@@ -306,7 +317,7 @@ Best regards, Team Empire
         EmailTags: [
           { Name: "app", Value: "empire-inspection" },
           { Name: "type", Value: "confirmation" },
-          { Name: "requestedDate", Value: displayDate },
+          { Name: "requestedDate", Value: requestedDate },
         ],
       });
 
@@ -373,7 +384,7 @@ Best regards, Team Empire
         ok: true,
         requestId,
         messageId: "office:" + (officeResp.MessageId || ""),
-        requestedDate: displayDate,
+        requestedDate: requestedDate,
       }),
     };
   } catch (err) {
