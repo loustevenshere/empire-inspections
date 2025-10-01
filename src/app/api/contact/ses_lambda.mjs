@@ -159,8 +159,12 @@ export const handler = async (event) => {
     const company = (body.company || "").toString().trim();
     const email = (body.email || "").toString().trim();
     const phone = (body.phone || "").toString().trim();
+    const street1 = (body.street1 || "").toString().trim();
+    const street2 = (body.street2 || "").toString().trim();
+    const city = (body.city || "").toString().trim();
+    const state = (body.state || "").toString().trim();
+    const zip = (body.zip || "").toString().trim();
     const jobAddress = (body.jobAddress || "").toString().trim();
-    const municipality = (body.municipality || "").toString().trim();
     const inspectionType = (body.inspectionType || "").toString().trim();
     const requestedDate = normalizeRequestedDate(
       (body.requestedDate || body.preferredDate || "").toString().trim()
@@ -213,7 +217,9 @@ export const handler = async (event) => {
       <p><b>Email:</b> ${escapeHtml(email)}</p>
       <p><b>Phone:</b> ${escapeHtml(phone)}</p>
       <p><b>Job Address:</b> ${escapeHtml(jobAddress)}</p>
-      <p><b>Municipality:</b> ${escapeHtml(municipality)}</p>
+      <p><b>Address Components:</b> ${escapeHtml(
+        `${street1}${street2 ? ", " + street2 : ""}, ${city}, ${state} ${zip}`
+      )}</p>
       <p><b>Inspection Type:</b> ${escapeHtml(inspectionType)}</p>
       <p><b>Requested Service Date:</b> ${escapeHtml(displayDate)}</p>
       ${message ? `<p><b>Message:</b> ${escapeHtml(message)}</p>` : ""}
@@ -225,7 +231,9 @@ ${company ? `Company: ${company}` : ""}
 Email: ${email}
 Phone: ${phone}
 Job Address: ${jobAddress}
-Municipality: ${municipality}
+Address Components: ${street1}${
+      street2 ? ", " + street2 : ""
+    }, ${city}, ${state} ${zip}
 Inspection Type: ${inspectionType}
 Requested Service Date: ${displayDate}
 ${message ? `Message: ${message}` : ""}`.trim();
@@ -334,8 +342,12 @@ Best regards, Team Empire
         companyLen: safeLen(company),
         emailLen: safeLen(email),
         phoneLen: safeLen(phone),
+        street1Len: safeLen(street1),
+        street2Len: safeLen(street2),
+        cityLen: safeLen(city),
+        stateLen: safeLen(state),
+        zipLen: safeLen(zip),
         jobAddressLen: safeLen(jobAddress),
-        municipalityLen: safeLen(municipality),
         inspectionTypeLen: safeLen(inspectionType),
         messageLen: safeLen(message),
         hasRequestedDate: !!requestedDate,

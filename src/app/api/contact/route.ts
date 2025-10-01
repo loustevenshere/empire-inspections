@@ -67,14 +67,23 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: false, error: "rate_limited" }, { status: 429 });
     }
 
+    // Compose jobAddress from structured address fields
+    const jobAddress = [data.street1, data.street2, `${data.city}, ${String(data.state).toUpperCase()} ${data.zip}`]
+      .filter(Boolean)
+      .join(", ");
+
     // Only forward whitelisted fields
     const forward = {
       name: data.name,
       company: data.company ?? null,
       email: data.email,
       phone: data.phone,
-      jobAddress: data.jobAddress,
-      municipality: data.municipality,
+      street1: data.street1,
+      street2: data.street2 || "",
+      city: data.city,
+      state: String(data.state).toUpperCase(),
+      zip: data.zip,
+      jobAddress,
       inspectionType: data.inspectionType,
       requestedDate: data.requestedDate ?? null,
       notes: data.notes ?? null,
