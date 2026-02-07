@@ -13,6 +13,8 @@ export default function Home() {
           src="/website-images/lightbulb.webp"
           alt="Electrical inspection background"
           fill
+          sizes="100vw"
+          quality={70}
           className="object-cover"
           priority
         />

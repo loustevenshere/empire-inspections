@@ -39,6 +39,7 @@ export default function Page() {
             alt="Philadelphia skyline"
             width={600}
             height={400}
+            quality={70}
             className="w-full h-auto rounded-lg shadow-lg object-cover aspect-[3/2]"
             priority
           />

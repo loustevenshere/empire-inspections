@@ -30,6 +30,8 @@ export default function Page() {
           src="/website-images/iStock-electric-inspection.webp"
           alt="Professional electrical inspection"
           fill
+          sizes="100vw"
+          quality={70}
           className="object-cover"
           priority
         />
