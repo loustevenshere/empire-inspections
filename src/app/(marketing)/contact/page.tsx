@@ -79,6 +79,20 @@ export default function Page() {
           </div>
         </div>
       </div>
+
+      {/* Map */}
+      <div className="mt-4 rounded-lg overflow-hidden border aspect-video">
+        <iframe
+          title="Empire Inspection Agency location"
+          src="https://maps.google.com/maps?q=6901+Germantown+Avenue+Suite+200+Philadelphia+PA+19119&t=&z=15&ie=UTF8&iwloc=&output=embed"
+          width="100%"
+          height="100%"
+          style={{ border: 0 }}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          aria-label="Map showing Empire Inspection Agency at 6901 Germantown Avenue, Philadelphia PA"
+        />
+      </div>
       
       {submitted ? (
         <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-lg" data-testid="contact-success">

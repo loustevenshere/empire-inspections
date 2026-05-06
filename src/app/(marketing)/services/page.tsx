@@ -9,16 +9,46 @@ export const metadata: Metadata = {
 };
 
 const faqs = [
-  { q: "How do I schedule inspections?", a: "Online via the website, or by phone/text." },
-  { q: "Will inspection reports be available?", a: "Yes." },
-  { q: "Does the agency upload inspection reports to the municipality?", a: "Yes, uploads are done immediately." },
-  { q: "Do I or the electrical contractor have to be present at the time of inspection?", a: "It is strongly encouraged that the contractor be present." },
-  { q: "What happens if I fail inspection?", a: "We apply a re-inspection fee of ½ of the original fee." },
-  { q: "How quickly will I receive my final certification?", a: "Once all inspection fees are paid, we upload all certificates." },
-  { q: "Does the inspector call to confirm inspection appointments?", a: "Yes, you will receive a call the morning of your appointment." },
-  { q: "How do I cancel or reschedule appointments?", a: "Call the office at least 2 hours before your scheduled appointment." },
-  { q: "Are evening or weekend appointments available?", a: "No. We offer services Monday through Friday, 8 AM – 4 PM." },
-  { q: "How long does an inspection take?", a: "Inspections typically range from 20 minutes to 1 hour." },
+  {
+    q: "How do I schedule inspections?",
+    a: "You can schedule online using the contact form on this website, or reach us directly by phone or text. We aim to respond to all requests the same business day.",
+  },
+  {
+    q: "Will inspection reports be available?",
+    a: "Yes. You will receive a detailed, code-referenced inspection report. Reports are available after the inspection is complete and all fees are paid.",
+  },
+  {
+    q: "Does the agency upload inspection reports to the municipality?",
+    a: "Yes — uploads are done immediately after the inspection is finalized. You do not need to coordinate this step yourself.",
+  },
+  {
+    q: "Do I or the electrical contractor have to be present at the time of inspection?",
+    a: "It is strongly encouraged that the electrical contractor be present. Their presence allows the inspector to address questions on the spot and helps crews understand any punch-list items directly.",
+  },
+  {
+    q: "What happens if I fail inspection?",
+    a: "If the work does not pass, we provide a clear punch-list of items that need correction. A re-inspection fee of ½ the original inspection fee applies once you are ready for re-inspection.",
+  },
+  {
+    q: "How quickly will I receive my final certification?",
+    a: "Once all inspection fees are paid and the work has passed, certificates are uploaded immediately. There is no delay on our end.",
+  },
+  {
+    q: "Does the inspector call to confirm inspection appointments?",
+    a: "Yes. You will receive a confirmation call the morning of your scheduled appointment so you know the inspector is on the way.",
+  },
+  {
+    q: "How do I cancel or reschedule appointments?",
+    a: "Please call the office at least 2 hours before your scheduled appointment time. Early notice helps us accommodate other clients and avoid a cancellation fee.",
+  },
+  {
+    q: "Are evening or weekend appointments available?",
+    a: "We currently offer inspections Monday through Friday, 8 AM – 4 PM. We do not offer evening or weekend appointments at this time.",
+  },
+  {
+    q: "How long does an inspection take?",
+    a: "Most inspections take between 20 minutes and 1 hour depending on the scope and complexity of the project. Larger commercial jobs may take longer.",
+  },
 ];
 
 export default function Page() {

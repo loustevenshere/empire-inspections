@@ -170,7 +170,7 @@ export default function RootLayout({
             <p className="mt-2 text-muted-foreground">© {new Date().getFullYear()} Empire Inspection Agency</p>
           </div>
         </footer>
-        <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background p-2 md:hidden">
+        <div className="fixed inset-x-0 bottom-0 z-50 border-t bg-background p-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] md:hidden">
           <a
             href={toTelHref(BUSINESS_PHONE)}
             aria-label={`Call Empire Inspection Agency at ${BUSINESS_PHONE}`}
