@@ -18,20 +18,25 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://painspections.org";
+
 export const metadata: Metadata = {
-  title: "Empire Inspection Agency — Electrical Inspections, Philadelphia PA",
+  title: {
+    default: "Empire Inspection Agency | Electrical Inspections Philadelphia PA",
+    template: "%s | Empire Inspection Agency",
+  },
   description:
-    "Independent electrical inspections for contractors and builders in Philadelphia. Fast scheduling, clear reports, and NEC-compliant guidance.",
-  metadataBase: new URL("https://example.com"), // replace after deploying
+    "PA licensed electrical inspection agency serving Philadelphia and surrounding municipalities. Fast scheduling, same-day results, NEC-compliant reports. License #A000501. Call (215) 839-8997.",
+  metadataBase: new URL(SITE_URL),
   icons: {
     icon: "/website-images/empireinspectionlogo.webp",
     apple: "/website-images/empireinspectionlogo.webp",
   },
   openGraph: {
-    title: "Empire Inspection Agency",
+    title: "Empire Inspection Agency | Electrical Inspections Philadelphia PA",
     description:
-      "Independent electrical inspections for contractors and builders in Philadelphia.",
-    url: "https://example.com",
+      "PA licensed electrical inspection agency serving Philadelphia and surrounding municipalities. Fast scheduling, same-day results, NEC-compliant reports.",
+    url: SITE_URL,
     siteName: "Empire Inspection Agency",
     type: "website",
     images: [
@@ -74,17 +79,49 @@ export default function RootLayout({
         <Script id="org-jsonld" type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
-            "@type": "Organization",
+            "@type": "LocalBusiness",
             "name": "Empire Inspection Agency",
+            "url": "https://painspections.org",
             "telephone": `+1${BUSINESS_PHONE.replace(/\D/g, "")}`,
-            "contactPoint": [
+            "email": "info@empireinspectionagency.com",
+            "description": "PA licensed electrical inspection agency serving Philadelphia and surrounding municipalities. Residential, commercial, pool, solar, and low voltage inspections. License #A000501.",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "6901 Germantown Avenue, Suite 200",
+              "addressLocality": "Philadelphia",
+              "addressRegion": "PA",
+              "postalCode": "19119",
+              "addressCountry": "US"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": 40.062,
+              "longitude": -75.184
+            },
+            "openingHoursSpecification": [
               {
-                "@type": "ContactPoint",
-                "contactType": "customer support",
-                "telephone": `+1${BUSINESS_PHONE.replace(/\D/g, "")}`,
-                "areaServed": "US"
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "opens": "08:00",
+                "closes": "16:00"
               }
-            ]
+            ],
+            "areaServed": [
+              { "@type": "City", "name": "Philadelphia", "addressRegion": "PA" },
+              { "@type": "AdministrativeArea", "name": "Bucks County", "addressRegion": "PA" },
+              { "@type": "AdministrativeArea", "name": "Montgomery County", "addressRegion": "PA" },
+              { "@type": "AdministrativeArea", "name": "Delaware County", "addressRegion": "PA" },
+              { "@type": "AdministrativeArea", "name": "Chester County", "addressRegion": "PA" }
+            ],
+            "hasCredential": "PA Inspection Agency License #A000501",
+            "priceRange": "$$",
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "telephone": `+1${BUSINESS_PHONE.replace(/\D/g, "")}`,
+              "areaServed": "PA",
+              "availableLanguage": "English"
+            }
           })}
         </Script>
       </head>

@@ -3,8 +3,9 @@ import Image from "next/image";
 import BadgeRow from "@/components/BadgeRow";
 
 export const metadata: Metadata = {
-  title: "About",
-  description: "Meet the owner and learn our coverage area.",
+  title: "About Our Licensed Inspection Agency | Philadelphia PA",
+  description:
+    "Empire Inspection Agency brings 20+ years of commercial and residential electrical expertise to Philadelphia and surrounding municipalities. PA Licensed & Insured — License #A000501.",
 };
 
 export default function Page() {

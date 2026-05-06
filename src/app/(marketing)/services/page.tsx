@@ -3,8 +3,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import Image from "next/image";
 
 export const metadata: Metadata = {
-  title: "Services",
-  description: "Detailed inspection services and pricing overview.",
+  title: "Electrical Inspection Services in Philadelphia PA",
+  description:
+    "Residential, commercial, pool, solar, and low voltage electrical inspections in Philadelphia PA and surrounding counties. Same-day or next-day scheduling. PA License #A000501.",
 };
 
 const faqs = [
